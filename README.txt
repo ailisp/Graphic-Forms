@@ -1,11 +1,19 @@
-
-Graphic-Forms README for version 0.8.0 (20 August 2007)
+Graphic-Forms README for version 0.8.1 (7 Nov 2016)
 Copyright (c) 2006-2007, Jack D. Unrue
+Copyright (c) 2016, Bo Yao <icerove@gmail.com>
 
 Graphic-Forms is a user interface library implemented in Common Lisp focusing
 on the Windows(R) platform. Graphic-Forms is licensed under the terms of the
 BSD License.
 
+This is a fork of original Graphic-Forms in common-lisp.net, which was not
+maintained. I decide to fix this to work under new verison of Windows and can
+be loaded through quicklisp, then use it as backend so McCLIM can run on Windows
+again (There was a McCLIM backend Graphic-Forms, but it didn't work and had been
+removed from newest McCLIM). I will then seperately maintain this McCLIM backend
+separately until it's mature and stable enough to merge into McCLIM. By then,
+McCLIM will be able to run on Linux, Mac OS X and Windows. Graphic-Forms will
+always suitable for simply, Windows only programs in Common Lisp.
 
 Dependencies
 ------------
