@@ -47,11 +47,11 @@
           :margins :right-margin :top-child :top-margin
           :vertical-margins)))
 
-(defun filter-initargs (arg-plist valid-keywords)
+(defun cleanup-initargs (arg-plist valid-keywords)
   "This function filters a putative list of initargs against a list of
  allowed keywords. The first return value is the list of valid initargs
  with unrecognized keywords and duplicates removed. The second return value
- is a list of the invalid keywords (and their values) that were removed."
+ is a list of the invalid keywords that were removed."
   (let ((clean-args nil)
         (bad-args (copy-seq arg-plist)))
     (loop for keyword in valid-keywords
@@ -63,22 +63,11 @@
                        while result))))
     (values clean-args bad-args)))
 
-(defun filter-style-keywords (input-keywords valid-keywords)
+(defun cleanup-style-keywords (form)
   "This function filters a putative list of style keywords against a list of
  allowed style keywords. The first return value is the list of valid keywords
- with unrecognized keywords and duplicates removed. The second return value
- is a list of the invalid keywords that were removed."
-  (let ((ok-keywords nil)
-        (bad-keywords nil))
-    (loop for input in input-keywords
-          do (if (find input valid-keywords)
-                 (push input ok-keywords)
-                 (push input bad-keywords)))
-    (values ok-keywords bad-keywords)))
-
-#|
+ with unrecognized
   (let ((style-form (getf form :style)))
-|#
 
 (defun extract-layout-definition (form)
   (let ((layout-form (getf form :layout)))
@@ -88,7 +77,7 @@
             (error 'gfs:toolkit-error
                    :format-control "form ~a is not a layout definition"
                    :format-arguments (list form)))
-        (filter-initargs (rest form) valid-keywords)))))
+        (cleanup-initargs (rest form) valid-keywords)))))
 
 #|
 (defun rewrite-panel-form (form)

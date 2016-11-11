@@ -5,7 +5,7 @@
 # Copyright (c) 2006-2007, Jack D. Unrue
 #
 
-VERSION      = 0.8
+VERSION      = 0.9
 
 CHM-DEPS     = gfc-package-tmp.xml gfg-package-tmp.xml gfs-package-tmp.xml        \
                gfw-package-tmp.xml constants.xml api.xml                          \

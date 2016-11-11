@@ -1517,6 +1517,8 @@
 (defconstant +wm-chartoitem+               #x002F)
 (defconstant +wm-setfont+                  #x0030)
 (defconstant +wm-getfont+                  #x0031)
+(defconstant +wm-windowposchanging+        #x0046)
+(defconstant +wm-windowposchanged+         #x0047)
 (defconstant +wm-contextmenu+              #x007B)
 (defconstant +wm-stylechanging+            #x007C)
 (defconstant +wm-stylechanged+             #x007D)

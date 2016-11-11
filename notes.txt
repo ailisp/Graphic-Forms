@@ -1,0 +1,19 @@
+
+- defining scrollbar event GFs [DONE]
+
+- dispatching scrollbar event notifications (SB_LINEUP, SB_PAGERIGHT, etc) [DONE]
+
+- definition of a scroll-area mix-in
+
+  * viewport attributes
+
+  * scrollbar policy
+
+  * client area scrolling helper functions
+
+- scrollbars as controls
+
+- keyboard interface for scrolling events
+
+- account for existing scrolling-related interface already implemented
+  for controls

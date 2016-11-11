@@ -1,3 +1,8 @@
+
+
+
+==============================================================================
+
 Release 0.8.0 of Graphic-Forms, a Common Lisp library for Windows GUI
 programming, is now available. The API and feature set is still evolving,
 so this is still another alpha release.
@@ -278,103 +283,5 @@ http://common-lisp.net/project/graphic-forms/
 Jack Unrue
 jdunrue (at) gmail (dot) com
 22 August 2006
-
-
-==============================================================================
-
-Release 0.4.0 of Graphic-Forms, a Common Lisp library for Windows GUI
-programming, is now available. This is an alpha release, meaning that
-the feature set and API have not yet stabilized.
-
-Here is what's new in this release:
-
-. CFFI snapshot 060606 or later is required in order to benefit from a
-bugfix for a problem when running on LispWorks where foreign structure
-contents could be corrupted; the most obvious symptom of this was a
-Win32 error encountered when attempting to create a window.
-
-. A new layout manager called `heap-layout' has been implemented.  Its
-purpose is to align all the children of a container in a single
-Z-orderwise stack and allow the application to select which of the
-children are top-most at any given time. This is useful when
-implemnenting windows with panels containing related functionality,
-where only one such panel should be visible at a time (e.g., property
-sheets or wizard dialogs).
-
-. This release provides access to the standard font dialog, and
-integrates with the previously-defined font and font-data classes.
-
-. Application-defined modal and modeless dialogs are now fully
-supported, including keyboard navigation (tab traversal, default
-button invocation via the ENTER key, and cancel button invocation via
-the ESC key).
-
-. In this release, the flow-layout manager gets a new style called
-:normalize which instructs the manager to size children equally using
-the maximum dimension of the children's preferred sizes opposite to
-the dimension in which the layout is oriented.
-
-. Applications may set minimum size and/or maximum size constraints
-for top-level windows. Setting both constraints to the same size
-implicitly disables resizing by the user.
-
-. It is also possible to explicitly disable resizabilty, which not
-only results in a fixed window size but also causes window decorations
-to be updated appropriately (no maximize box and no resize handles in
-the window frame).
-
-. The button class has been expanded to support checkboxes, radio
-buttons, toggle buttons, and tri-state button controls.
-
-. There is now basic support for instantiating single-line and
-multi-line edit controls. Edit controls participate in the focus gain
-/ focus loss protocol; they also provide notification when contents
-change via the event-modify generic function.
-
-. Implemented event-focus-gain and event-focus-loss to allow applications
-to response to changes in focus.
-
-. It is now possible to customize the background color, foreground
-color, and font of label controls. Infrastructure to support similar
-customizations for other controls is in place.
-
-. Functions capture-mouse and release-mouse are available to implement
-mouse capturing behavior.
-
-. Added a function to programmatically append separators to menus;
-this was already possible via DEFMENU but not yet supported for
-dynamic menu management.
-
-. Rewrote timer event processing such that the library no longer uses
-the TimerProc callback technique, but instead each call to the Win32
-SetTimer function is made with the handle to a hidden utility window
-managed by the library code.
-
-. Changed the rectangle type to be a structure; it was a class before.
-
-. Started work on infrastructure required to support a new layout
-manager called `group-layout' which will appear in a subsequent
-release. The infrastructure developed this time includes definition of
-a text-baseline method that widgets implement to help layout managers
-align text appropriately.
-
-. Also started work on infrastructure needed to enable WinXP-themed
-controls.
-
-. Continued work on the UnBlocked demo game.
-
-The above list is in addition to documentation enhancements and
-bug fixes. The README.txt file in the release zip file also has
-additional important information about this release.
-
-Download the release zip file here:
-http://prdownloads.sourceforge.net/graphic-forms/graphic-forms-0.4.0.zip?download
-
-The project website is:
-http://common-lisp.net/project/graphic-forms/
-
-Jack Unrue
-jdunrue (at) gmail (dot) com
-July 3rd 2006
 
 ==============================================================================

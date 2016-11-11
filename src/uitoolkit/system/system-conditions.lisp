@@ -1,7 +1,7 @@
 ;;;;
 ;;;; system-conditions.lisp
 ;;;;
-;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2006-2007, Jack D. Unrue
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -33,19 +33,27 @@
 
 (in-package :graphic-forms.uitoolkit.system)
 
-(define-condition toolkit-error (error)
-  ((detail :reader detail :initarg :detail :initform "not specified")))
+(define-condition toolkit-error (simple-error)
+  ((detail :reader detail :initarg :detail :initform nil)))
 
 (defmethod print-object ((obj toolkit-error) stream)
-  (print-unreadable-object (obj stream :type t)
-    (format stream "~s" (detail obj))))
+  (let ((detail (detail obj)))
+    (cond
+      (detail
+       (format stream "~a" detail))
+      (t
+       (call-next-method)))))
 
-(define-condition toolkit-warning (warning)
-  ((detail :reader detail :initarg :detail :initform "not specified")))
+(define-condition toolkit-warning (simple-warning)
+  ((detail :reader detail :initarg :detail :initform nil)))
 
 (defmethod print-object ((obj toolkit-warning) stream)
-  (print-unreadable-object (obj stream :type t)
-    (format stream "~s" (detail obj))))
+  (let ((detail (detail obj)))
+    (cond
+      (detail
+       (format stream "~a" detail))
+      (t
+       (call-next-method)))))
 
 (define-condition disposed-error (error) ())
 
@@ -53,19 +61,16 @@
   ((code :reader code :initarg :code :initform (get-last-error))))
 
 (defmethod print-object ((obj win32-error) stream)
-  (print-unreadable-object (obj stream :type t)
-    (format stream "~s: error code: ~a" (detail obj) (code obj))))
+  (format stream "code ~a: ~a" (code obj) (detail obj)))
 
 (define-condition win32-warning (toolkit-warning)
   ((code :reader code :initarg :code :initform (get-last-error))))
 
 (defmethod print-object ((obj win32-warning) stream)
-  (print-unreadable-object (obj stream :type t)
-    (format stream "~s: error code: ~a" (detail obj) (code obj))))
+  (format stream "code ~a: ~a" (code obj) (detail obj)))
 
 (define-condition comdlg-error (win32-error)
   ((dlg-code :reader dlg-code :initarg :dlg-code :initform (comm-dlg-extended-error))))
 
 (defmethod print-object ((obj comdlg-error) stream)
-  (print-unreadable-object (obj stream :type t)
-    (format stream "~s: common dialog error code: ~a" (detail obj) (dlg-code obj))))
+  (format stream "common dialog code ~a: ~a" (code obj) (detail obj)))

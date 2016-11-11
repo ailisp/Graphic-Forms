@@ -91,7 +91,7 @@
   (declare (ignore disp item))
   (let* ((*default-pathname-defaults* (parse-namestring gfsys::*unblocked-dir*))
          (image-path (merge-pathnames "about.bmp")))
-    (about-demo *unblocked-win* image-path "About UnBlocked" "UnBlocked version 0.8")))
+    (about-demo *unblocked-win* image-path "About UnBlocked" "UnBlocked version 0.9")))
 
 (defun unblocked-startup ()
   (let ((menubar (gfw:defmenu ((:item "&File"
