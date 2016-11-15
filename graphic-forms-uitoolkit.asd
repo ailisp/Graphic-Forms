@@ -4,7 +4,7 @@
 ;;;; graphic-forms-uitoolkit.asd
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
-;;;; Copyright (C) 2016, Bo Yao
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -71,9 +71,9 @@
                        (:file "gdi32")
                        (:file "kernel32")
                        (:file "user32")
-                       (:file "metrics")
                        (:file "native-object")
-                       (:file "system-utils")))
+		       (:file "system-utils")
+		       (:file "metrics")))
                  (:module "graphics"
                     :depends-on ("system")
                     :components
@@ -96,7 +96,7 @@
                        (:file "font")
                        (:file "graphics-context")
                        (:module "plugins"
-                          :components
+                          :componentsXF
                             ((:file "graphics-plugin-packages")
 #-skip-default-plugin        (:module "default"
                               :serial t
