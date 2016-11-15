@@ -53,7 +53,7 @@
         :components
           ((:file "packages")
            (:module "uitoolkit"
-              :depends-on ("packages" #+sbcl "external-libraries")
+              :depends-on ("packages")
               :components
                 ((:module "system"
                     :serial t

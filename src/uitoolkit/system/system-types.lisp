@@ -2,6 +2,7 @@
 ;;;; system-types.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -295,11 +296,11 @@
   (y LONG))
 
 (defcstruct minmaxinfo
-  (reserved point)
-  (maxsize point)
-  (maxposition point)
-  (mintracksize point)
-  (maxtracksize point))
+  (reserved (:struct point))
+  (maxsize (:struct point))
+  (maxposition (:struct point))
+  (mintracksize (:struct point))
+  (maxtracksize (:struct point)))
 
 (defcstruct msg
   (hwnd HANDLE)
@@ -307,7 +308,7 @@
   (wparam WPARAM)
   (lparam LPARAM)
   (time DWORD)
-  (pnt point))
+  (pnt (:struct point)))
 
 (defcstruct paintstruct
   (hdc            HANDLE)
@@ -336,8 +337,8 @@
 
 (defcstruct monitorinfoex
   (cbsize UINT)
-  (monitor rect)
-  (work rect)
+  (monitor (:struct rect))
+  (work (:struct rect))
   (flags DWORD)
   (device TCHAR :count 32)) ; CCHDEVICENAME
 
