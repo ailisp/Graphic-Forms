@@ -96,7 +96,7 @@
                        (:file "font")
                        (:file "graphics-context")
                        (:module "plugins"
-                          :componentsXF
+                          :components
                             ((:file "graphics-plugin-packages")
 #-skip-default-plugin        (:module "default"
                               :serial t
