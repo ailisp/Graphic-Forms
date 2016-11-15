@@ -2,6 +2,7 @@
 ;;;; image-data.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -80,10 +81,10 @@
 ;;;
 
 (defun make-initial-bitmapinfo (plugin)
-  (let ((bi-ptr (cffi:foreign-alloc 'gfs::bitmapinfo)))
+  (let ((bi-ptr (cffi:foreign-alloc '(:struct gfs::bitmapinfo))))
     (cffi:with-foreign-slots ((gfs::bisize gfs::biwidth gfs::biheight gfs::biplanes gfs::bibitcount
                                gfs::bicompression gfs::bmicolors)
-                              bi-ptr gfs::bitmapinfo)
+                              bi-ptr (:struct gfs::bitmapinfo))
       (gfs::zero-mem bi-ptr gfs::bitmapinfo)
       (setf gfs::bisize        (cffi:foreign-type-size 'gfs::bitmapinfoheader)
             gfs::biplanes      1

@@ -2,6 +2,7 @@
 ;;;; metrics.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -40,11 +41,11 @@
       (unwind-protect
           (let ((func-ptr (retrieve-function-pointer hmodule "DllGetVersion")))
             (unless (cffi:null-pointer-p func-ptr)
-              (cffi:with-foreign-object (info-ptr 'gfs::dllversioninfo)
+              (cffi:with-foreign-object (info-ptr '(:struct gfs::dllversioninfo))
               (cffi:with-foreign-slots ((gfs::size gfs::vermajor gfs::verminor gfs::buildnum)
-                                        info-ptr gfs::dllversioninfo)
-                (setf gfs::size (cffi:foreign-type-size 'gfs::dllversioninfo))
-                (cffi:foreign-funcall-pointer func-ptr (:cconv :stdcall) :pointer info-ptr gfs::hresult)
+                                        info-ptr (:struct gfs::dllversioninfo))
+                (setf gfs::size (cffi:foreign-type-size '(:struct gfs::dllversioninfo)))
+                (cffi:foreign-funcall-pointer func-ptr (:convention :stdcall) :pointer info-ptr gfs::hresult)
                 (setf version (list gfs::vermajor gfs::verminor gfs::buildnum))))))
         (gfs::free-library hmodule)))
     version))
@@ -165,7 +166,7 @@
     (setf (gethash :display-sizes table)
           (list (make-size :width (get-system-metrics +sm-cxscreen+)
                            :height (get-system-metrics +sm-cyscreen+))
-                (cffi:with-foreign-object (rect-ptr 'rect)
+                (cffi:with-foreign-object (rect-ptr '(:struct rect))
                   (if (zerop (system-parameters-info +spi-getworkarea+ 0 rect-ptr 0))
                     (error 'win32-error :detail "system-parameters-info failed"))
                   (let ((tmp (cffi:convert-from-foreign rect-ptr 'rect-pointer)))

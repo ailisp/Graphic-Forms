@@ -2,6 +2,7 @@
 ;;;; user32.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -209,14 +210,14 @@
   (ps LPTR))
 
 (defcfun
-  ("EnumChildWindows" enum-child-windows :cconv :stdcall)
+  ("EnumChildWindows" enum-child-windows :convention :stdcall)
   INT
   (hwnd HANDLE)
   (func :pointer)
   (lparam LPARAM))
 
 (defcfun
-  ("EnumDisplayMonitors" enum-display-monitors :cconv :stdcall)
+  ("EnumDisplayMonitors" enum-display-monitors :convention :stdcall)
   INT
   (hdc HANDLE)
   (cliprect LPTR)
@@ -224,7 +225,7 @@
   (data LPARAM))
 
 (defcfun
-  ("EnumThreadWindows" enum-thread-windows :cconv :stdcall)
+  ("EnumThreadWindows" enum-thread-windows :convention :stdcall)
   INT
   (threadid DWORD)
   (func :pointer)

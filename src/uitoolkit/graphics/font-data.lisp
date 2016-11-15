@@ -2,6 +2,7 @@
 ;;;; font-data.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -44,7 +45,7 @@
 (defun style->logfont (style lf-ptr)
   (cffi:with-foreign-slots ((gfs::lfweight gfs::lfitalic gfs::lfunderline
                              gfs::lfstrikeout gfs::lfoutprec gfs::lfpitchandfamily)
-                            lf-ptr gfs::logfont)
+                            lf-ptr (:struct gfs::logfont))
     (setf gfs::lfweight    (if (find :bold style)      gfs::+fw-bold+ gfs::+fw-normal+))
     (setf gfs::lfitalic    (if (find :italic style)    1 0))
     (setf gfs::lfunderline (if (find :underline style) 1 0))
@@ -62,7 +63,7 @@
   (let ((style nil))
     (cffi:with-foreign-slots ((gfs::lfweight gfs::lfitalic gfs::lfunderline
                                gfs::lfstrikeout gfs::lfoutprec gfs::lfpitchandfamily)
-                              lf-ptr gfs::logfont)
+                              lf-ptr (:struct gfs::logfont))
       (if (= gfs::lfweight gfs::+fw-bold+)
         (push :bold style))
       (unless (zerop gfs::lfitalic)
@@ -80,15 +81,15 @@
     style))
 
 (defun data->logfont (hdc data)
-  (let ((lf-ptr (cffi:foreign-alloc 'gfs::logfont))
+  (let ((lf-ptr (cffi:foreign-alloc '(:struct gfs::logfont)))
         (style (font-data-style data)))
     (gfs:zero-mem lf-ptr gfs::logfont)
-    (cffi:with-foreign-slots ((gfs::lfheight gfs::lfcharset gfs::lffacename) lf-ptr gfs::logfont)
+    (cffi:with-foreign-slots ((gfs::lfheight gfs::lfcharset gfs::lffacename) lf-ptr (:struct gfs::logfont))
       (setf gfs::lfheight (pntsize->lfheight hdc (font-data-point-size data)))
       (setf gfs::lfcharset (font-data-char-set data))
       (style->logfont style lf-ptr)
       (cffi:with-foreign-string (str (font-data-face-name data))
-        (let ((lffacename-ptr (cffi:foreign-slot-pointer lf-ptr 'gfs::logfont 'gfs::lffacename)))
+        (let ((lffacename-ptr (cffi:foreign-slot-pointer lf-ptr '(:struct gfs::logfont) 'gfs::lffacename)))
           (gfs::strncpy lffacename-ptr str (1- gfs::+lf-facesize+))
           (setf (cffi:mem-aref lffacename-ptr :char (1- gfs::+lf-facesize+)) 0))))
     lf-ptr))
@@ -98,11 +99,11 @@
         (face-name "")
         (point-size 0)
         (style nil))
-    (cffi:with-foreign-slots ((gfs::lfheight gfs::lfcharset gfs::lffacename) lf-ptr gfs::logfont)
+    (cffi:with-foreign-slots ((gfs::lfheight gfs::lfcharset gfs::lffacename) lf-ptr (:struct gfs::logfont))
       (setf point-size (lfheight->pntsize hdc gfs::lfheight))
       (setf char-set gfs::lfcharset)
       (setf style (logfont->style lf-ptr))
-      (let ((lffacename-ptr (cffi:foreign-slot-pointer lf-ptr 'gfs::logfont 'gfs::lffacename)))
+      (let ((lffacename-ptr (cffi:foreign-slot-pointer lf-ptr '(:struct gfs::logfont) 'gfs::lffacename)))
         (setf face-name (cffi:foreign-string-to-lisp lffacename-ptr))))
     (gfg:make-font-data :char-set char-set
                         :face-name face-name
@@ -117,7 +118,7 @@
     hfont))
 
 (defun font->data (hdc hfont)
-  (cffi:with-foreign-object (lf-ptr 'gfs::logfont)
+  (cffi:with-foreign-object (lf-ptr '(:struct gfs::logfont))
     (gfs:zero-mem lf-ptr gfs::logfont)
     (if (zerop (gfs::get-object hfont (cffi:foreign-type-size 'gfs::logfont) lf-ptr))
       (error 'gfs:win32-error :detail "get-object failed"))

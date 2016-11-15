@@ -2,6 +2,7 @@
 ;;;; system-utils.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -187,9 +188,9 @@
 ;;;
 
 (defmacro with-rect ((rect-var) &body body)
-  `(cffi:with-foreign-object (,rect-var 'gfs::rect)
+  `(cffi:with-foreign-object (,rect-var '(:struct gfs::rect))
      (cffi:with-foreign-slots ((gfs::left gfs::right gfs::top gfs::bottom)
-                               ,rect-var gfs::rect)
+                               ,rect-var (:struct gfs::rect))
        (zero-mem ,rect-var gfs::rect)
        ,@body)))
 

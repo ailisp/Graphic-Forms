@@ -2,6 +2,7 @@
 ;;;; graphics-context.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -76,8 +77,8 @@
     native-style))
 
 (defun update-pen-for-gc (gc)
-  (cffi:with-foreign-object (lb-ptr 'gfs::logbrush)
-    (cffi:with-foreign-slots ((gfs::style gfs::color gfs::hatch) lb-ptr gfs::logbrush)
+  (cffi:with-foreign-object (lb-ptr '(:struct gfs::logbrush))
+    (cffi:with-foreign-slots ((gfs::style gfs::color gfs::hatch) lb-ptr (:struct gfs::logbrush))
       (setf gfs::style (logbrush-style-of gc))
       (setf gfs::color (logbrush-color-of gc))
       (setf gfs::hatch (logbrush-hatch-of gc))
@@ -135,14 +136,14 @@
 
 (defun call-points-function (fn name hdc points)
   (let* ((count (length points))
-         (array (cffi:foreign-alloc 'gfs::point :count count)))
+         (array (cffi:foreign-alloc '(:struct gfs::point) :count count)))
     (unwind-protect
         (progn
           (loop for pnt in points
                 with i = 0
                 do (progn
                      (cffi:with-foreign-slots ((gfs::x gfs::y)
-                                               (cffi:mem-aref array 'gfs::point i) gfs::point)
+                                               (cffi:mem-aref array '(:struct gfs::point) i) (:struct gfs::point))
                        (setf gfs::x (gfs:point-x pnt))
                        (setf gfs::y (gfs:point-y pnt)))
                      (incf i)))
@@ -168,9 +169,9 @@
   (let ((len (length str))
         (sz (gfs:make-size)))
     (when (> len 0)
-      (cffi:with-foreign-object (dt-ptr 'gfs::drawtextparams)
+      (cffi:with-foreign-object (dt-ptr '(:struct gfs::drawtextparams))
         (cffi:with-foreign-slots ((gfs::cbsize gfs::tablength gfs::leftmargin gfs::rightmargin)
-                                  dt-ptr gfs::drawtextparams)
+                                  dt-ptr (:struct gfs::drawtextparams))
           (setf gfs::cbsize (cffi:foreign-type-size 'gfs::drawtextparams))
           (setf gfs::tablength tab-width)
           (setf gfs::leftmargin 0)
@@ -180,8 +181,8 @@
             (setf (gfs:size-width sz) (- gfs::right gfs::left))
             (setf (gfs:size-height sz) (- gfs::bottom gfs::top))))))
     (when (or (zerop len) (zerop (gfs:size-height sz)))
-      (cffi:with-foreign-object (tm-ptr 'gfs::textmetrics)
-        (cffi:with-foreign-slots ((gfs::tmheight gfs::tmexternalleading) tm-ptr gfs::textmetrics)
+      (cffi:with-foreign-object (tm-ptr '(:struct gfs::textmetrics))
+        (cffi:with-foreign-slots ((gfs::tmheight gfs::tmexternalleading) tm-ptr (:struct gfs::textmetrics))
           (if (zerop (gfs::get-text-metrics hdc tm-ptr))
             (error 'gfs:win32-error :detail "get-text-metrics failed"))
           (setf (gfs:size-height sz) (+ gfs::tmheight gfs::tmexternalleading)))))
@@ -316,8 +317,8 @@
         (himage (gfs:handle im))
         (tr-mask nil)
         (memdc (gfs::create-compatible-dc (cffi:null-pointer))))
-    (cffi:with-foreign-object (bmp-ptr 'gfs::bitmap)
-      (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr gfs::bitmap)
+    (cffi:with-foreign-object (bmp-ptr '(:struct gfs::bitmap))
+      (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr (:struct gfs::bitmap))
         (gfs::get-object himage (cffi:foreign-type-size 'gfs::bitmap) bmp-ptr)
         (if (transparency-pixel-of im)
           (progn
@@ -426,9 +427,9 @@
         (old-bk-mode (gfs::get-bk-mode (gfs:handle self))))
     (if (find :transparent style)
       (gfs::set-bk-mode (gfs:handle self) gfs::+transparent+))
-    (cffi:with-foreign-object (dt-ptr 'gfs::drawtextparams)
+    (cffi:with-foreign-object (dt-ptr '(:struct gfs::drawtextparams))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::tablength gfs::leftmargin gfs::rightmargin)
-                                dt-ptr gfs::drawtextparams)
+                                dt-ptr (:struct gfs::drawtextparams))
         (setf gfs::cbsize (cffi:foreign-type-size 'gfs::drawtextparams))
         (setf gfs::tablength tb-width)
         (setf gfs::leftmargin 0)
@@ -495,10 +496,10 @@
         (hfont (gfs:handle font))
         (metrics nil))
     (gfs::with-hfont-selected (hdc hfont)
-      (cffi:with-foreign-object (tm-ptr 'gfs::textmetrics)
+      (cffi:with-foreign-object (tm-ptr '(:struct gfs::textmetrics))
         (cffi:with-foreign-slots ((gfs::tmascent gfs::tmdescent gfs::tmexternalleading
                                    gfs::tmavgcharwidth gfs::tmmaxcharwidth)
-                                  tm-ptr gfs::textmetrics)
+                                  tm-ptr (:struct gfs::textmetrics))
           (if (zerop (gfs::get-text-metrics hdc tm-ptr))
             (error 'gfs:win32-error :detail "get-text-metrics failed"))
           (setf metrics (make-font-metrics :ascent gfs::tmascent

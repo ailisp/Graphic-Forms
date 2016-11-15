@@ -2,6 +2,7 @@
 ;;;; image.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -53,8 +54,8 @@
         (screen-dc (gfs::get-dc (cffi:null-pointer)))
         (nptr (cffi:null-pointer)))
     (gfs::with-compatible-dcs (nptr memdc-src memdc-dest)
-      (cffi:with-foreign-object (bmp-ptr 'gfs::bitmap)
-        (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr gfs::bitmap)
+      (cffi:with-foreign-object (bmp-ptr '(:struct gfs::bitmap))
+        (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr (:struct gfs::bitmap))
           (gfs::get-object horig (cffi:foreign-type-size 'gfs::bitmap) bmp-ptr)
           (setf hclone (gfs::create-compatible-bitmap screen-dc gfs::width gfs::height))
           (gfs::select-object memdc-dest hclone)
@@ -90,11 +91,11 @@
     (file
       (load self file))
     (size
-      (cffi:with-foreign-object (bih-ptr 'gfs::bitmapinfoheader)
+      (cffi:with-foreign-object (bih-ptr '(:struct gfs::bitmapinfoheader))
         (gfs::zero-mem bih-ptr gfs::bitmapinfoheader)
         (cffi:with-foreign-slots ((gfs::bisize gfs::biwidth gfs::biheight gfs::biplanes
                                    gfs::bibitcount gfs::bicompression)
-                                  bih-ptr gfs::bitmapinfoheader)
+                                  bih-ptr (:struct gfs::bitmapinfoheader))
           (setf gfs::bisize        (cffi:foreign-type-size 'gfs::bitmapinfoheader)
                 gfs::biwidth       (gfs:size-width size)
                 gfs::biheight      (- (gfs:size-height size))
@@ -119,8 +120,8 @@
     (error 'gfs:disposed-error))
   (let ((size (gfs:make-size))
         (himage (gfs:handle self)))
-    (cffi:with-foreign-object (bmp-ptr 'gfs::bitmap)
-      (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr gfs::bitmap)
+    (cffi:with-foreign-object (bmp-ptr '(:struct gfs::bitmap))
+      (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr (:struct gfs::bitmap))
         (gfs::get-object himage (cffi:foreign-type-size 'gfs::bitmap) bmp-ptr)
         (setf (gfs:size-width size) gfs::width
               (gfs:size-height size) gfs::height)))
@@ -135,9 +136,9 @@
         (nptr (cffi:null-pointer)))
     (if pixel-pnt
       (progn
-        (cffi:with-foreign-object (bmp-ptr 'gfs::bitmap)
+        (cffi:with-foreign-object (bmp-ptr '(:struct gfs::bitmap))
           (gfs::get-object (gfs:handle self) (cffi:foreign-type-size 'gfs::bitmap) bmp-ptr)
-          (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr gfs::bitmap)
+          (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr (:struct gfs::bitmap))
             (setf hmask (gfs::create-bitmap gfs::width gfs::height 1 1 (cffi:null-pointer)))
             (if (gfs:null-handle-p hmask)
               (error 'gfs:win32-error :detail "create-bitmap failed"))
