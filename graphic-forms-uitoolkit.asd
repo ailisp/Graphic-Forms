@@ -4,6 +4,7 @@
 ;;;; graphic-forms-uitoolkit.asd
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -37,23 +38,20 @@
 
 (print "Graphic-Forms UI Toolkit")
 (print "Copyright (c) 2006-2007 by Jack D. Unrue")
+(print "Copyright (C) 2016 by Bo Yao <icerove@gmail.com>")
 (print " ")
 
 (defsystem graphic-forms-uitoolkit
   :description "Graphic-Forms UI Toolkit"
-  :version "0.8.0"
+  :version "0.9.0"
   :author "Jack D. Unrue"
+  :maintainer "Bo Yao"
   :licence "BSD"
   :depends-on ("cffi" "lw-compat" "closer-mop" "macro-utilities" "binary-data")
   :components
     ((:module "src"
         :components
           ((:file "packages")
-#+sbcl     (:module "external-libraries"
-              :components
-                ((:module "sbcl-callback-patch"
-                    :components
-                      ((:file "callback-hacking")))))
            (:module "uitoolkit"
               :depends-on ("packages" #+sbcl "external-libraries")
               :components
