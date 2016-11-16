@@ -2,6 +2,7 @@
 ;;;; display.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -37,7 +38,7 @@
 ;;; helper functions
 ;;;
 
-(cffi:defcallback (display-visitor :cconv :stdcall) gfs::BOOL
+(cffi:defcallback (display-visitor :convention :stdcall) gfs::BOOL
     ((hmonitor :pointer) (hdc :pointer) (monitorrect :pointer) (data gfs::LPARAM))
   (declare (ignore hdc monitorrect))
   (call-display-visitor-func (thread-context) hmonitor data)
@@ -45,22 +46,22 @@
 
 (defun query-display-info (hmonitor)
   (let ((info nil))
-    (cffi:with-foreign-object (mi-ptr 'gfs::monitorinfoex)
-      (cffi:with-foreign-slots ((gfs::cbsize gfs::flags) mi-ptr gfs::monitorinfoex)
+    (cffi:with-foreign-object (mi-ptr '(:struct gfs::monitorinfoex))
+      (cffi:with-foreign-slots ((gfs::cbsize gfs::flags) mi-ptr (:struct gfs::monitorinfoex))
         (setf gfs::cbsize (cffi:foreign-type-size 'gfs::monitorinfoex))
         (if (zerop (gfs::get-monitor-info hmonitor mi-ptr))
           (error 'gfs:win32-warning :detail "get-monitor-info failed"))
         (push (= (logand gfs::flags gfs::+monitorinfoof-primary+) gfs::+monitorinfoof-primary+) info)
-        (let ((str-ptr (cffi:foreign-slot-pointer mi-ptr 'gfs::monitorinfoex 'gfs::device)))
-          (push (cffi:foreign-string-to-lisp str-ptr (1- gfs::+cchdevicename+)) info))
-        (let ((rect-ptr (cffi:foreign-slot-pointer mi-ptr 'gfs::monitorinfoex 'gfs::monitor)))
+        (let ((str-ptr (cffi:foreign-slot-pointer mi-ptr '(:struct gfs::monitorinfoex) 'gfs::device)))
+          (push (cffi:foreign-string-to-lisp str-ptr :count (1- gfs::+cchdevicename+)) info))
+        (let ((rect-ptr (cffi:foreign-slot-pointer mi-ptr '(:struct gfs::monitorinfoex) 'gfs::monitor)))
           (cffi:with-foreign-slots ((gfs::left gfs::top gfs::right gfs::bottom)
-                                    rect-ptr gfs::rect)
+                                    rect-ptr (:struct gfs::rect))
             (push (gfs:make-size :width (- gfs::right gfs::left) :height (- gfs::bottom  gfs::top))
                   info)))
-        (let ((rect-ptr (cffi:foreign-slot-pointer mi-ptr 'gfs::monitorinfoex 'gfs::work)))
+        (let ((rect-ptr (cffi:foreign-slot-pointer mi-ptr '(:struct gfs::monitorinfoex) 'gfs::work)))
           (cffi:with-foreign-slots ((gfs::left gfs::top gfs::right gfs::bottom)
-                                    rect-ptr gfs::rect)
+                                    rect-ptr (:struct gfs::rect))
             (push (gfs:make-size :width (- gfs::right gfs::left) :height (- gfs::bottom  gfs::top))
                   info)))))
     (reverse info)))
@@ -97,7 +98,7 @@
   (make-instance 'display
                  :handle (gfs::monitor-from-point 0 0 gfs::+monitor-defaulttoprimary+)))
 
-(cffi:defcallback (top-level-window-visitor :cconv :stdcall) gfs::BOOL
+(cffi:defcallback (top-level-window-visitor :convention :stdcall) gfs::BOOL
     ((hwnd :pointer) (lparam gfs::LPARAM))
   (declare (ignore lparam))
   (let* ((tc (thread-context))

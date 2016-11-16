@@ -2,6 +2,7 @@
 ;;;; widget.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -183,13 +184,13 @@
     (error 'gfs:disposed-error)))
 
 (defmethod client-size ((self widget))
-  (cffi:with-foreign-object (wi-ptr 'gfs::windowinfo)
+  (cffi:with-foreign-object (wi-ptr '(:struct gfs::windowinfo))
     (cffi:with-foreign-slots ((gfs::cbsize
                                gfs::clientleft
                                gfs::clienttop
                                gfs::clientright
                                gfs::clientbottom)
-                              wi-ptr gfs::windowinfo)
+                              wi-ptr (:struct gfs::windowinfo))
       (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
       (when (zerop (gfs::get-window-info (gfs:handle self) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
@@ -289,17 +290,17 @@
     (error 'gfs:disposed-error)))
 
 (defmethod location ((self widget))
-  (cffi:with-foreign-object (wi-ptr 'gfs::windowinfo)
+  (cffi:with-foreign-object (wi-ptr '(:struct gfs::windowinfo))
     (cffi:with-foreign-slots ((gfs::cbsize
                                gfs::clientleft
                                gfs::clienttop)
-                              wi-ptr gfs::windowinfo)
+                              wi-ptr (:struct gfs::windowinfo))
       (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
       (when (zerop (gfs::get-window-info (gfs:handle self) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
-      (cffi:with-foreign-object (pnt-ptr 'gfs::point)
+      (cffi:with-foreign-object (pnt-ptr '(:struct gfs::point))
         (cffi:with-foreign-slots ((gfs::x gfs::y)
-                                 pnt-ptr gfs::point)
+                                 pnt-ptr (:struct gfs::point))
           (setf gfs::x gfs::clientleft)
           (setf gfs::y gfs::clienttop)
           (gfs::screen-to-client (gfs:handle self) pnt-ptr)

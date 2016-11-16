@@ -2,6 +2,7 @@
 ;;;; widget-classes.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -181,7 +182,7 @@
   (:documentation "The base class for widgets having pre-defined native behavior."))
 
 (defmacro define-control-class (classname system-classname callback-event-name &optional docstring mixins)
-  `(defclass ,classname `,(control ,@mixins)
+  `(defclass ,classname (control ,@mixins)
      ((callback-event-name
        :accessor callback-event-name-of
        :initform ,callback-event-name

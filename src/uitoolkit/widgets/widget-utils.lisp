@@ -121,13 +121,13 @@
   (if (gfs:disposed-p widget)
     (error 'gfs:disposed-error))
   (multiple-value-bind (ptr params)
-      (cffi:convert-to-foreign pnt 'gfs:point)
+      (cffi:convert-to-foreign pnt '(:struct gfs:point)) ; MAYBE!
     (ecase system
       (:client (if (zerop (gfs::screen-to-client (gfs:handle widget) ptr))
                  (error 'gfs:win32-error :detail "screen-to-client failed")))
       (:display (if (zerop (gfs::client-to-screen (gfs:handle widget) ptr))
                   (error 'gfs::win32-error :detail "client-to-screen failed"))))
-    (let ((pnt (cffi:convert-from-foreign ptr 'gfs:point)))
+    (let ((pnt (cffi:convert-from-foreign ptr '(:struct gfs:point)))) ; MAYBE!
       (cffi:free-converted-object ptr 'gfs:point params)
       pnt)))
 
@@ -136,8 +136,8 @@
   (gfs::show-cursor (if flag 1 0)))
 
 (defun obtain-pointer-location ()
-  (cffi:with-foreign-object (ptr 'gfs:point)
-    (cffi:with-foreign-slots ((gfs::x gfs::y) ptr gfs:point)
+  (cffi:with-foreign-object (ptr '(:struct gfs:point))
+    (cffi:with-foreign-slots ((gfs::x gfs::y) ptr (:struct gfs:point))
       (when (zerop (gfs::get-cursor-pos ptr))
         (warn 'gfs:win32-warning :detail "get-cursor-pos failed")
         (return-from obtain-pointer-location (gfs:make-point)))
@@ -183,11 +183,11 @@
         (gfs::get-window-text hwnd str-ptr (1+ length))))))
 
 (defun outer-location (w pnt)
-  (cffi:with-foreign-object (wi-ptr 'gfs::windowinfo)
+  (cffi:with-foreign-object (wi-ptr '(:struct gfs::windowinfo))
     (cffi:with-foreign-slots ((gfs::cbsize
                                gfs::windowleft
                                gfs::windowtop)
-                              wi-ptr gfs::windowinfo)
+                              wi-ptr (:struct gfs::windowinfo))
       (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
       (when (zerop (gfs::get-window-info (gfs:handle w) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
@@ -195,13 +195,13 @@
       (setf (gfs:point-y pnt) gfs::windowtop))))
 
 (defun outer-size (w sz)
-  (cffi:with-foreign-object (wi-ptr 'gfs::windowinfo)
+  (cffi:with-foreign-object (wi-ptr '(:struct gfs::windowinfo))
     (cffi:with-foreign-slots ((gfs::cbsize
                                gfs::windowleft
                                gfs::windowtop
                                gfs::windowright
                                gfs::windowbottom)
-                              wi-ptr gfs::windowinfo)
+                              wi-ptr (:struct gfs::windowinfo))
       (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
       (when (zerop (gfs::get-window-info (gfs:handle w) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
@@ -265,8 +265,8 @@
                                   :height (vertical-scrollbar-arrow-height))))
 
     (unwind-protect
-        (cffi:with-foreign-object (bm-ptr 'gfs::bitmap)
-          (cffi:with-foreign-slots ((gfs::width gfs::height) bm-ptr gfs::bitmap)
+        (cffi:with-foreign-object (bm-ptr '(:struct gfs::bitmap))
+          (cffi:with-foreign-slots ((gfs::width gfs::height) bm-ptr (:struct gfs::bitmap))
             (gfs::get-object hbitmap (cffi:foreign-type-size 'gfs::bitmap) bm-ptr)
             (setf *check-box-size* (gfs:make-size :width (floor gfs::width 4)
                                                   :height (floor gfs::height 3)))))

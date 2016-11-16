@@ -47,7 +47,11 @@
   :author "Jack D. Unrue"
   :maintainer "Bo Yao"
   :licence "BSD"
-  :depends-on ("cffi" "lw-compat" "closer-mop" "macro-utilities" "binary-data")
+  :depends-on ("cffi"
+	       "lw-compat"
+	       "closer-mop"
+	       "com.gigamonkeys.macro-utilities"
+	       "com.gigamonkeys.binary-data")
   :components
     ((:module "src"
         :components
@@ -60,7 +64,7 @@
                     :components
                       ((:file "system-constants")
                        (:file "system-classes")
-                       (:file "system-conditions")
+                       (:file "system-conditions") ; not a very good place
                        (:file "system-generics")
                        (:file "system-types")
                        (:file "datastructs")
@@ -117,7 +121,7 @@
                       ((:file "widget-constants")
                        (:file "widget-classes")
                        (:file "layout-classes")
-                       (:file "thread-context")
+                       (:file "thread-context") ; require defun in top-level.lisp
                        (:file "message-generics")
                        (:file "event-generics")
                        (:file "layout-generics")
