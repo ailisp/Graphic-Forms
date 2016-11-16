@@ -2,6 +2,7 @@
 ;;;; list-box.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -96,8 +97,8 @@
     ;; save the index of the top-most item
     ;;
     (let ((top-index (gfs::send-message hwnd gfs::+lb-gettopindex+ 0 0)))
-      (cffi:with-foreign-object (top-item-rect-ptr 'gfs::rect)
-        (cffi:with-foreign-object (sel-item-rect-ptr 'gfs::rect)
+      (cffi:with-foreign-object (top-item-rect-ptr '(:struct gfs::rect))
+        (cffi:with-foreign-object (sel-item-rect-ptr '(:struct gfs::rect))
 
           ;; get the rectangle for the top-most item which we
           ;; will repaint at the end

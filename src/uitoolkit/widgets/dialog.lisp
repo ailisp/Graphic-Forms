@@ -2,6 +2,7 @@
 ;;;; dialog.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -246,7 +247,7 @@
                            ;; handle the shutdown request the same way.
                            ;;
                            (gfs::post-quit-message (cffi:foreign-slot-value msg-ptr
-                                                                            'gfs::msg
+                                                                            '(:struct gfs::msg)
                                                                             'gfs::wparam))
                            t)
                         ((= gm-code -1)

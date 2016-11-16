@@ -2,6 +2,7 @@
 ;;;; progress-bar.lisp
 ;;;;
 ;;;; Copyright (C) 2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -44,9 +45,9 @@
 
 (defun pb-get-range (p-bar)
   "Returns the range of a progress bar."
-  (cffi:with-foreign-object (r-ptr 'gfs::pbrange)
+  (cffi:with-foreign-object (r-ptr '(:struct gfs::pbrange))
     (gfs::send-message (gfs:handle p-bar) gfs::+pbm-getrange+ 0 (cffi:pointer-address r-ptr))
-    (cffi:with-foreign-slots ((gfs::low gfs::high) r-ptr gfs::pbrange)
+    (cffi:with-foreign-slots ((gfs::low gfs::high) r-ptr (:struct gfs::pbrange))
       (gfs:make-span :start gfs::low :end gfs::high))))
 
 (declaim (inline pb-get-step))

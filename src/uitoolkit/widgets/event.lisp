@@ -2,6 +2,7 @@
 ;;;; event.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -69,10 +70,10 @@
 
 (defun message-loop (msg-filter)
   (push msg-filter (message-filters (thread-context)))
-  (cffi:with-foreign-object (msg-ptr 'gfs::msg)
+  (cffi:with-foreign-object (msg-ptr '(:struct gfs::msg))
     (loop
       (let ((gm (gfs::get-message msg-ptr (cffi:null-pointer) 0 0)))
-        (cffi:with-foreign-slots ((gfs::message gfs::wparam) msg-ptr gfs::msg)
+        (cffi:with-foreign-slots ((gfs::message gfs::wparam) msg-ptr (:struct gfs::msg))
           (when (funcall msg-filter gm msg-ptr)
             (pop (message-filters (thread-context)))
             (return-from message-loop gfs::wparam)))))))
@@ -81,7 +82,7 @@
   (let ((filter (first (message-filters (thread-context)))))
     (unless filter
       (return-from process-events nil))
-    (cffi:with-foreign-object (msg-ptr 'gfs::msg)
+    (cffi:with-foreign-object (msg-ptr '(:struct gfs::msg))
       (loop until (zerop (gfs::peek-message msg-ptr (cffi:null-pointer) 0 0 gfs::+pm-remove+))
             do (funcall filter 1 msg-ptr)))))
 
@@ -134,13 +135,13 @@
       ((zerop wparam)
          (cffi:with-foreign-slots ((gfs::bottom)
                                    (cffi:make-pointer (logand #xFFFFFFFF lparam))
-                                   gfs::rect)
+                                   (:struct gfs::rect))
            (setf  gfs::bottom (- gfs::bottom (gfs:size-height size))))
          0)
       (t
          (cffi:with-foreign-slots ((gfs::clientnewbottom)
                                    (cffi:make-pointer (logand #xFFFFFFFF lparam))
-                                   gfs::nccalcsize-params)
+                                   (:struct gfs::nccalcsize-params))
            (setf  gfs::clientnewbottom (- gfs::clientnewbottom (gfs:size-height size))))
          0))))
 
@@ -370,7 +371,7 @@
          (ptr (cffi:make-pointer (logand #xFFFFFFFF lparam)))
          (rect (cffi:convert-from-foreign ptr 'gfs::rect-pointer)))
     (event-pre-move (dispatcher w) w rect)
-    (cffi:with-foreign-slots ((gfs::left gfs::top gfs::right gfs::bottom) ptr gfs::rect)
+    (cffi:with-foreign-slots ((gfs::left gfs::top gfs::right gfs::bottom) ptr (:struct gfs::rect))
       (let ((pnt (gfs:location rect))
             (size (gfs:size rect)))
         (setf gfs::left   (gfs:point-x pnt)
@@ -401,10 +402,10 @@
   (declare (ignore wparam lparam))
   (let ((widget (get-widget (thread-context) hwnd)))
     (if widget
-      (cffi:with-foreign-object (ps-ptr 'gfs::paintstruct)
+      (cffi:with-foreign-object (ps-ptr '(:struct gfs::paintstruct))
         (cffi:with-foreign-slots ((gfs::rcpaint-x gfs::rcpaint-y
                                    gfs::rcpaint-width gfs::rcpaint-height)
-                                  ps-ptr gfs::paintstruct)
+                                  ps-ptr (:struct gfs::paintstruct))
           (let ((gc (make-instance 'gfg:graphics-context :handle (gfs::begin-paint hwnd ps-ptr)))
                 (pnt (gfs:make-point :x gfs::rcpaint-x :y gfs::rcpaint-y))
                 (size (gfs:make-size :width gfs::rcpaint-width :height gfs::rcpaint-height))
@@ -504,17 +505,17 @@
         (if max-size
           (cffi:with-foreign-slots ((gfs::x gfs::y)
                                     (cffi:foreign-slot-pointer info-ptr
-                                                               'gfs::minmaxinfo
+                                                               '(:struct gfs::minmaxinfo)
                                                                'gfs::maxtracksize)
-                                    gfs::point)
+                                    (:struct gfs::point))
             (setf gfs::x (gfs:size-width max-size)
                   gfs::y (gfs:size-height max-size))))
         (if min-size
           (cffi:with-foreign-slots ((gfs::x gfs::y)
                                     (cffi:foreign-slot-pointer info-ptr
-                                                               'gfs::minmaxinfo
+                                                               '(:struct gfs::minmaxinfo)
                                                                'gfs::mintracksize)
-                                    gfs::point)
+                                    (:struct gfs::point))
             (setf gfs::x (gfs:size-width min-size)
                   gfs::y (gfs:size-height min-size)))))))
   0)
@@ -547,7 +548,7 @@
                  (#.gfs::+wmsz-topleft+     :top-left)
                  (#.gfs::+wmsz-topright+    :top-right))))
     (event-pre-resize (dispatcher w) w rect type)
-    (cffi:with-foreign-slots ((gfs::left gfs::top gfs::right gfs::bottom) ptr gfs::rect)
+    (cffi:with-foreign-slots ((gfs::left gfs::top gfs::right gfs::bottom) ptr (:struct gfs::rect))
       (let ((pnt (gfs:location rect))
             (size (gfs:size rect)))
         (setf gfs::left   (gfs:point-x pnt)

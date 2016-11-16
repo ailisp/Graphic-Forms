@@ -2,6 +2,7 @@
 ;;;; font-dialog.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -42,12 +43,12 @@
 (defun obtain-chosen-font (dlg gc)
   (if (or (gfs:disposed-p dlg) (gfs:disposed-p gc))
     (error 'gfs:disposed-error))
-  (cffi:with-foreign-slots ((gfs::logfont gfs::color) (gfs:handle dlg) gfs::choosefont)
+  (cffi:with-foreign-slots ((gfs::logfont gfs::color) (gfs:handle dlg) (:struct gfs::choosefont))
     (values (make-instance 'gfg:font :handle (gfs::create-font-indirect gfs::logfont))
             (gfg::rgb->color gfs::color))))
 
 (defun lookup-default-font ()
-  (let ((lf-ptr (cffi:foreign-alloc 'gfs::logfont)))
+  (let ((lf-ptr (cffi:foreign-alloc '(:struct gfs::logfont))))
     (gfs:zero-mem lf-ptr gfs::logfont)
     (gfs::get-object (gfs::get-stock-object gfs::+system-font+)
                      (cffi:foreign-type-size 'gfs::logfont)
@@ -108,7 +109,7 @@
 (defmethod gfs:dispose ((self font-dialog))
   (let ((cf-ptr (gfs:handle self)))
     (unless (cffi:null-pointer-p cf-ptr)
-      (cffi:with-foreign-slots ((gfs::logfont) cf-ptr gfs::choosefont)
+      (cffi:with-foreign-slots ((gfs::logfont) cf-ptr (:struct gfs::choosefont))
         (unless (cffi:null-pointer-p gfs::logfont)
           (cffi:foreign-free gfs::logfont)))
       (cffi:foreign-free cf-ptr)))
@@ -121,7 +122,7 @@
     (error 'gfs:toolkit-error :detail ":owner initarg is required"))
   (if (gfs:disposed-p owner)
     (error 'gfs:disposed-error))
-  (let ((cf-ptr (cffi:foreign-alloc 'gfs::choosefont))
+  (let ((cf-ptr (cffi:foreign-alloc '(:struct gfs::choosefont)))
         (lf-ptr (if initial-font
                   (gfg::data->logfont (gfs:handle gc) (gfg:data-object initial-font gc))
                   (lookup-default-font))))
@@ -129,7 +130,7 @@
       (declare (ignore ex-style))
       (cffi:with-foreign-slots ((gfs::structsize gfs::howner gfs::hdc gfs::logfont
                                  gfs::flags gfs::color)
-                                cf-ptr gfs::choosefont)
+                                cf-ptr (:struct gfs::choosefont))
         (setf gfs::structsize (cffi:foreign-type-size 'gfs::choosefont)
               gfs::howner     (gfs:handle owner)
               gfs::hdc        (gfs:handle gc)

@@ -2,6 +2,7 @@
 ;;;; window.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -70,7 +71,7 @@
       (if (and parent (layout-of parent))
         (append-layout-item (layout-of parent) win)))))
 
-(cffi:defcallback (child-window-visitor :cconv :stdcall) gfs::BOOL
+(cffi:defcallback (child-window-visitor :convention :stdcall) gfs::BOOL
     ((hwnd :pointer) (lparam gfs::LPARAM))
   (let* ((tc (thread-context))
          (child (get-widget tc hwnd))
@@ -84,8 +85,8 @@
 
 (defun window-class-registered-p (class-name)
   (cffi:with-foreign-string (str-ptr class-name)
-    (cffi:with-foreign-object (wc-ptr 'gfs::wndclassex)
-      (cffi:with-foreign-slots ((gfs::cbsize) wc-ptr gfs::wndclassex)
+    (cffi:with-foreign-object (wc-ptr '(:struct gfs::wndclassex))
+      (cffi:with-foreign-slots ((gfs::cbsize) wc-ptr (:struct gfs::wndclassex))
         (gfs::zero-mem wc-ptr gfs::wndclassex)
         (setf gfs::cbsize (cffi:foreign-type-size 'gfs::wndclassex))
         (/= (gfs::get-class-info (gfs::get-module-handle (cffi:null-pointer)) str-ptr wc-ptr)
@@ -99,8 +100,8 @@
 
 (defun get-window-class-cursor (hwnd)
   (cffi:with-foreign-string (str-ptr (get-window-class-name hwnd))
-    (cffi:with-foreign-object (wc-ptr 'gfs::wndclassex)
-      (cffi:with-foreign-slots ((gfs::cbsize gfs::hcursor) wc-ptr gfs::wndclassex)
+    (cffi:with-foreign-object (wc-ptr '(:struct gfs::wndclassex))
+      (cffi:with-foreign-slots ((gfs::cbsize gfs::hcursor) wc-ptr (:struct gfs::wndclassex))
         (gfs::zero-mem wc-ptr gfs::wndclassex)
         (setf gfs::cbsize (cffi:foreign-type-size 'gfs::wndclassex))
         (when (zerop (gfs::get-class-info (gfs::get-module-handle (cffi:null-pointer)) str-ptr wc-ptr))
@@ -115,12 +116,12 @@
     (return-from register-window-class 1))
   (let ((retval 0))
     (cffi:with-foreign-string (str-ptr class-name)
-      (cffi:with-foreign-object (wc-ptr 'gfs::wndclassex)
+      (cffi:with-foreign-object (wc-ptr '(:struct gfs::wndclassex))
         (cffi:with-foreign-slots ((gfs::cbsize gfs::style gfs::wndproc
                                    gfs::clsextra gfs::wndextra gfs::hinst
                                    gfs::hicon gfs::hcursor gfs::hbrush
                                    gfs::menuname gfs::classname gfs::smallicon)
-                                  wc-ptr gfs::wndclassex)
+                                  wc-ptr (:struct gfs::wndclassex))
           (gfs::zero-mem wc-ptr gfs::wndclassex)
           (setf gfs::cbsize    (cffi:foreign-type-size 'gfs::wndclassex)
                 gfs::style     style

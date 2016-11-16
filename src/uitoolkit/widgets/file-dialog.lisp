@@ -2,6 +2,7 @@
 ;;;; file-dialog.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -41,7 +42,7 @@
   (let ((ofn-ptr (gfs:handle dlg)))
     (if (cffi:null-pointer-p ofn-ptr)
       (error 'gfs:disposed-error))
-    (cffi:with-foreign-slots ((gfs::ofnfile) ofn-ptr gfs::openfilename)
+    (cffi:with-foreign-slots ((gfs::ofnfile) ofn-ptr (:struct gfs::openfilename))
       (if (or (cffi:null-pointer-p gfs::ofnfile) (= (cffi:mem-ref gfs::ofnfile :char) 0))
         nil
         (let* ((raw-list (extract-foreign-strings gfs::ofnfile))
@@ -95,7 +96,7 @@
     (unless (cffi:null-pointer-p ofn-ptr)
       (cffi:with-foreign-slots ((gfs::ofnfile gfs::ofnfilter gfs::ofntitle
                                  gfs::ofninitialdir gfs::ofndefext)
-                                ofn-ptr gfs::openfilename)
+                                ofn-ptr (:struct gfs::openfilename))
         (cffi:foreign-free gfs::ofnfile)
         (cffi:foreign-free gfs::ofnfilter)
         (unless (cffi:null-pointer-p gfs::ofntitle)
@@ -116,7 +117,7 @@
     (error 'gfs:toolkit-error :detail ":owner initarg is required"))
   (if (gfs:disposed-p owner)
     (error 'gfs:disposed-error))
-  (let ((ofn-ptr (cffi:foreign-alloc 'gfs::openfilename))
+  (let ((ofn-ptr (cffi:foreign-alloc '(:struct gfs::openfilename)))
         (filters-buffer (if filters
                           (collect-foreign-strings (loop for entry in filters
                                                          append (list (car entry) (cdr entry))))
@@ -143,7 +144,7 @@
                                  gfs::ofninitialdir gfs::ofntitle gfs::ofnflags gfs::ofnfileoffset
                                  gfs::ofnfileext gfs::ofndefext gfs::ofncustdata gfs::ofnhookfn
                                  gfs::ofntemplname gfs::ofnpvreserved gfs::ofndwreserved gfs::ofnexflags)
-                                ofn-ptr gfs::openfilename)
+                                ofn-ptr (:struct gfs::openfilename))
         (setf gfs::ofnsize          (cffi:foreign-type-size 'gfs::openfilename)
               gfs::ofnhwnd          (gfs:handle owner)
               gfs::ofnhinst         (cffi:null-pointer)

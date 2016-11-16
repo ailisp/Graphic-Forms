@@ -135,23 +135,23 @@
                        (:file "color-dialog")
                        (:file "file-dialog")
                        (:file "font-dialog")
-                       (:file "control")
-                       (:file "edit")
+                       (:file "control") ; require append-layout-item, subclass-wndproc
+                       (:file "edit") 
                        (:file "label")
                        (:file "button")
-                       (:file "item-manager")
-                       (:file "list-item")
+                       (:file "item-manager") 
+                       (:file "list-item") ; require lb-select-item lb-deselect-item
                        (:file "list-box")
                        (:file "menu")
                        (:file "menu-item")
                        (:file "defmenu")
                        (:file "progress-bar")
-                       (:file "event")
-                       (:file "scrolling-helper")
-                       (:file "scrollbar")
+                       (:file "event") ; require set-window-origin
+                       (:file "scrolling-helper") ; require obtain-top-child
+                       (:file "scrollbar") 
                        (:file "slider")
                        (:file "status-bar")
-                       (:file "window")
+                       (:file "window") ; require arrang-hwnds
                        (:file "root-window")
                        (:file "top-level")
                        (:file "panel")

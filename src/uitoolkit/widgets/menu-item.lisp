@@ -2,6 +2,7 @@
 ;;;; menu-item.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -38,13 +39,13 @@
 ;;;
 
 (defun get-menuitem-state (hmenu mid)
-  (cffi:with-foreign-object (mii-ptr 'gfs::menuiteminfo)
+  (cffi:with-foreign-object (mii-ptr '(:struct gfs::menuiteminfo))
     (cffi:with-foreign-slots ((gfs::cbsize gfs::mask gfs::type
                                gfs::state gfs::id gfs::hsubmenu
                                gfs::hbmpchecked gfs::hbmpunchecked
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
-                              mii-ptr gfs::menuiteminfo)
+                              mii-ptr (:struct gfs::menuiteminfo))
       (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-state+))
       (setf gfs::type 0)
@@ -62,13 +63,13 @@
       gfs::state)))
 
 (defun get-menuitem-text (hmenu mid)
-  (cffi:with-foreign-object (mii-ptr 'gfs::menuiteminfo)
+  (cffi:with-foreign-object (mii-ptr '(:struct gfs::menuiteminfo))
     (cffi:with-foreign-slots ((gfs::cbsize gfs::mask gfs::type
                                gfs::state gfs::id gfs::hsubmenu
                                gfs::hbmpchecked gfs::hbmpunchecked
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
-                              mii-ptr gfs::menuiteminfo)
+                              mii-ptr (:struct gfs::menuiteminfo))
       (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-string+))
       (setf gfs::type 0)
@@ -97,13 +98,13 @@
 
 (defun set-menuitem-text (hmenu mid label)
   (cffi:with-foreign-string (str-ptr label)
-    (cffi:with-foreign-object (mii-ptr 'gfs::menuiteminfo)
+    (cffi:with-foreign-object (mii-ptr '(:struct gfs::menuiteminfo))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::mask gfs::type
                                  gfs::state gfs::id gfs::hsubmenu
                                  gfs::hbmpchecked gfs::hbmpunchecked
                                  gfs::idata gfs::tdata gfs::cch
                                  gfs::hbmpitem)
-                                mii-ptr gfs::menuiteminfo)
+                                mii-ptr (:struct gfs::menuiteminfo))
         (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
         (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-string+))
         (setf gfs::type 0)
@@ -120,13 +121,13 @@
         (error 'gfs:win32-error :detail "set-menu-item-info failed")))))
 
 (defun check-menuitem (hmenu mid checked)
-  (cffi:with-foreign-object (mii-ptr 'gfs::menuiteminfo)
+  (cffi:with-foreign-object (mii-ptr '(:struct gfs::menuiteminfo))
     (cffi:with-foreign-slots ((gfs::cbsize gfs::mask gfs::type
                                gfs::state gfs::id gfs::hsubmenu
                                gfs::hbmpchecked gfs::hbmpunchecked
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
-                              mii-ptr gfs::menuiteminfo)
+                              mii-ptr  (:struct gfs::menuiteminfo))
       (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-state+))
       (setf gfs::type 0)
@@ -143,13 +144,13 @@
       (error 'gfs:win32-error :detail "set-menu-item-info failed"))))
 
 (defun is-menuitem-checked (hmenu mid)
-  (cffi:with-foreign-object (mii-ptr 'gfs::menuiteminfo)
+  (cffi:with-foreign-object (mii-ptr '(:struct gfs::menuiteminfo))
     (cffi:with-foreign-slots ((gfs::cbsize gfs::mask gfs::type
                                gfs::state gfs::id gfs::hsubmenu
                                gfs::hbmpchecked gfs::hbmpunchecked
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
-                              mii-ptr gfs::menuiteminfo)
+                              mii-ptr (:struct gfs::menuiteminfo))
       (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-state+))
       (setf gfs::type 0)

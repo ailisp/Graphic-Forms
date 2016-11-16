@@ -2,6 +2,7 @@
 ;;;; menu.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -45,13 +46,13 @@
         (info-type (if label 0 gfs::+mft-separator+))
         (info-state (logior (if checked gfs::+mfs-checked+ 0)
                             (if disabled gfs::+mfs-disabled+ 0))))
-    (cffi:with-foreign-object (mii-ptr 'gfs::menuiteminfo)
+    (cffi:with-foreign-object (mii-ptr ' (:struct gfs::menuiteminfo))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::mask gfs::type
                                  gfs::state gfs::id gfs::hsubmenu
                                  gfs::hbmpchecked gfs::hbmpunchecked
                                  gfs::idata gfs::tdata gfs::cch
                                  gfs::hbmpitem)
-                                mii-ptr gfs::menuiteminfo)
+                                mii-ptr (:struct gfs::menuiteminfo))
         (setf gfs::cbsize        (cffi:foreign-type-size 'gfs::menuiteminfo)
               gfs::mask          info-mask
               gfs::type          info-type

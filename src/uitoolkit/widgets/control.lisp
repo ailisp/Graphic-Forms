@@ -2,6 +2,7 @@
 ;;;; control.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -38,8 +39,8 @@
 ;;;
 
 (defun initialize-comctl-classes (icc-flags)
-  (cffi:with-foreign-object (ic-ptr 'gfs::initcommoncontrolsex)
-    (cffi:with-foreign-slots ((gfs::size gfs::icc) ic-ptr gfs::initcommoncontrolsex)
+  (cffi:with-foreign-object (ic-ptr '(:struct gfs::initcommoncontrolsex))
+    (cffi:with-foreign-slots ((gfs::size gfs::icc) ic-ptr (:struct gfs::initcommoncontrolsex))
       (setf gfs::size (cffi:foreign-type-size 'gfs::initcommoncontrolsex)
             gfs::icc icc-flags))
     (if (and (zerop (gfs::init-common-controls ic-ptr)) (/= (gfs::get-last-error) 0))
