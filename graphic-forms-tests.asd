@@ -4,6 +4,7 @@
 ;;;; graphic-forms-tests.asd
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -33,32 +34,17 @@
 ;;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ;;;;
 
-(load (concatenate 'string gfsys::*gf-dir* gfsys::*lisp-unit-file*))
-
-(defpackage #:graphic-forms.uitoolkit.tests
-  (:nicknames #:gft)
-  (:use :common-lisp :lisp-unit)
-  (:export
-    #:drawing-tester
-    #:event-tester
-    #:hello-world
-    #:image-tester
-    #:layout-tester
-    #:scroll-tester
-    #:widget-tester
-    #:textedit
-    #:unblocked
-    #:windlg))
-
 (print "Graphic-Forms UI Toolkit Tests")
 (print "Copyright (c) 2006-2007 by Jack D. Unrue")
+(print "Copyright (c) 2016 by Bo Yao <icerove@gmail.com>" )
 (print " ")
 
 (defsystem graphic-forms-tests
   :description "Graphic-Forms UI Toolkit Tests"
-  :version "0.8.0"
+  :version "0.9.0"
   :author "Jack D. Unrue"
   :licence "BSD"
+  :depends-on (:lisp-unit graphic-forms-uitoolkit)
   :components
     ((:module "src"
         :components
@@ -97,3 +83,18 @@
                      (:file "scroll-text-panel")
                      (:file "scroll-tester")
                      (:file "windlg")))))))))
+
+(defpackage #:graphic-forms.uitoolkit.tests
+  (:nicknames #:gft)
+  (:use :common-lisp :lisp-unit)
+  (:export
+    #:drawing-tester
+    #:event-tester
+    #:hello-world
+    #:image-tester
+    #:layout-tester
+    #:scroll-tester
+    #:widget-tester
+    #:textedit
+    #:unblocked
+    #:windlg))

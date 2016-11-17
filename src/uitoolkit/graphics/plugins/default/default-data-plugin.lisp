@@ -2,6 +2,7 @@
 ;;;; default-data-plugin.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -152,12 +153,12 @@
                                       (type gfs::bitmapinfo-pointer-type))
   (let ((bi-ptr (gfg::make-initial-bitmapinfo lisp-obj))
         (colors (gfg:color-table (palette-of lisp-obj))))
-    (let ((ptr (cffi:foreign-slot-pointer bi-ptr 'gfs::bitmapinfo 'gfs::bmicolors)))
+    (let ((ptr (cffi:foreign-slot-pointer bi-ptr '(:struct gfs::bitmapinfo) 'gfs::bmicolors)))
       (dotimes (i (length colors))
         (let ((clr (aref colors i)))
           (cffi:with-foreign-slots ((gfs::rgbblue gfs::rgbgreen
                                      gfs::rgbred gfs::rgbreserved)
-                                    (cffi:mem-aref ptr 'gfs::rgbquad i) gfs::rgbquad)
+                                    (cffi:mem-aptr ptr '(:struct gfs::rgbquad) i) (:struct gfs::rgbquad))
             (setf gfs::rgbreserved 0
                   gfs::rgbblue     (gfg:color-blue clr)
                   gfs::rgbgreen    (gfg:color-green clr)

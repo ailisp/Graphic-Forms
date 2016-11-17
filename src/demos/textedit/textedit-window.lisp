@@ -2,6 +2,7 @@
 ;;;; textedit-window.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -157,7 +158,7 @@
 
 (defun about-textedit (disp item)
   (declare (ignore disp item))
-  (let* ((*default-pathname-defaults* (parse-namestring gfsys::*textedit-dir*))
+  (let* ((*default-pathname-defaults* (user-homedir-pathname))
          (image-path (merge-pathnames "about.bmp")))
     (about-demo *textedit-win* image-path "About TextEdit" "TextEdit version 0.9")))
 
@@ -198,7 +199,7 @@
     (setf (gfw:menu-bar *textedit-win*) menubar
           (gfw:size *textedit-win*) (gfs:make-size :width 500 :height 500)
           (gfw:text *textedit-win*) *textedit-new-title*)
-    (let ((*default-pathname-defaults* (parse-namestring gfsys::*textedit-dir*)))
+    (let ((*default-pathname-defaults* (user-homedir-pathname)))
      (setf (gfw:image *textedit-win*) (make-instance 'gfg:icon-bundle :file (merge-pathnames "textedit.ico"))))
     (gfw:show *textedit-win* t)))
 
