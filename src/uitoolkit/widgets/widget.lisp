@@ -191,7 +191,7 @@
                                gfs::clientright
                                gfs::clientbottom)
                               wi-ptr (:struct gfs::windowinfo))
-      (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
+      (setf gfs::cbsize (cffi::foreign-type-size '(:struct gfs::windowinfo)))
       (when (zerop (gfs::get-window-info (gfs:handle self) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
       (gfs:make-size :width (- gfs::clientright gfs::clientleft)
@@ -295,7 +295,7 @@
                                gfs::clientleft
                                gfs::clienttop)
                               wi-ptr (:struct gfs::windowinfo))
-      (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
+      (setf gfs::cbsize (cffi::foreign-type-size '(:struct gfs::windowinfo)))
       (when (zerop (gfs::get-window-info (gfs:handle self) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
       (cffi:with-foreign-object (pnt-ptr '(:struct gfs::point))

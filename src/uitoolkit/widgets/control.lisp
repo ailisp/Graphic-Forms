@@ -41,7 +41,7 @@
 (defun initialize-comctl-classes (icc-flags)
   (cffi:with-foreign-object (ic-ptr '(:struct gfs::initcommoncontrolsex))
     (cffi:with-foreign-slots ((gfs::size gfs::icc) ic-ptr (:struct gfs::initcommoncontrolsex))
-      (setf gfs::size (cffi:foreign-type-size 'gfs::initcommoncontrolsex)
+      (setf gfs::size (cffi:foreign-type-size '(:struct gfs::initcommoncontrolsex))
             gfs::icc icc-flags))
     (if (and (zerop (gfs::init-common-controls ic-ptr)) (/= (gfs::get-last-error) 0))
       (warn 'gfs:win32-warning :detail "init-common-controls failed"))))

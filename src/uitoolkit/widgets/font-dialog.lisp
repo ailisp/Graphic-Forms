@@ -49,9 +49,9 @@
 
 (defun lookup-default-font ()
   (let ((lf-ptr (cffi:foreign-alloc '(:struct gfs::logfont))))
-    (gfs:zero-mem lf-ptr gfs::logfont)
+    (gfs:zero-mem lf-ptr (:struct gfs::logfont))
     (gfs::get-object (gfs::get-stock-object gfs::+system-font+)
-                     (cffi:foreign-type-size 'gfs::logfont)
+                     (cffi:foreign-type-size '(:struct gfs::logfont))
                      lf-ptr)
     lf-ptr))
 
@@ -131,7 +131,7 @@
       (cffi:with-foreign-slots ((gfs::structsize gfs::howner gfs::hdc gfs::logfont
                                  gfs::flags gfs::color)
                                 cf-ptr (:struct gfs::choosefont))
-        (setf gfs::structsize (cffi:foreign-type-size 'gfs::choosefont)
+        (setf gfs::structsize (cffi:foreign-type-size '(:struct gfs::choosefont))
               gfs::howner     (gfs:handle owner)
               gfs::hdc        (gfs:handle gc)
               gfs::logfont    lf-ptr

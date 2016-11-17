@@ -45,7 +45,7 @@
   :description "Graphic-Forms UI Toolkit"
   :version "0.9.0"
   :author "Jack D. Unrue"
-  :maintainer "Bo Yao"
+  :maintainer "Bo Yao <icerove@gmail.com>"
   :licence "BSD"
   :depends-on ("cffi"
 	       "lw-compat"

@@ -56,7 +56,7 @@
     (gfs::with-compatible-dcs (nptr memdc-src memdc-dest)
       (cffi:with-foreign-object (bmp-ptr '(:struct gfs::bitmap))
         (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr (:struct gfs::bitmap))
-          (gfs::get-object horig (cffi:foreign-type-size 'gfs::bitmap) bmp-ptr)
+          (gfs::get-object horig (cffi:foreign-type-size '(:struct gfs::bitmap)) bmp-ptr)
           (setf hclone (gfs::create-compatible-bitmap screen-dc gfs::width gfs::height))
           (gfs::select-object memdc-dest hclone)
           (gfs::select-object memdc-src horig)
@@ -92,11 +92,11 @@
       (load self file))
     (size
       (cffi:with-foreign-object (bih-ptr '(:struct gfs::bitmapinfoheader))
-        (gfs::zero-mem bih-ptr gfs::bitmapinfoheader)
+        (gfs::zero-mem bih-ptr (:struct gfs::bitmapinfoheader))
         (cffi:with-foreign-slots ((gfs::bisize gfs::biwidth gfs::biheight gfs::biplanes
                                    gfs::bibitcount gfs::bicompression)
                                   bih-ptr (:struct gfs::bitmapinfoheader))
-          (setf gfs::bisize        (cffi:foreign-type-size 'gfs::bitmapinfoheader)
+          (setf gfs::bisize        (cffi:foreign-type-size '(:struct gfs::bitmapinfoheader))
                 gfs::biwidth       (gfs:size-width size)
                 gfs::biheight      (- (gfs:size-height size))
                 gfs::biplanes      1
@@ -122,7 +122,7 @@
         (himage (gfs:handle self)))
     (cffi:with-foreign-object (bmp-ptr '(:struct gfs::bitmap))
       (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr (:struct gfs::bitmap))
-        (gfs::get-object himage (cffi:foreign-type-size 'gfs::bitmap) bmp-ptr)
+        (gfs::get-object himage (cffi:foreign-type-size '(:struct gfs::bitmap)) bmp-ptr)
         (setf (gfs:size-width size) gfs::width
               (gfs:size-height size) gfs::height)))
     size))
@@ -137,7 +137,7 @@
     (if pixel-pnt
       (progn
         (cffi:with-foreign-object (bmp-ptr '(:struct gfs::bitmap))
-          (gfs::get-object (gfs:handle self) (cffi:foreign-type-size 'gfs::bitmap) bmp-ptr)
+          (gfs::get-object (gfs:handle self) (cffi:foreign-type-size '(:struct gfs::bitmap)) bmp-ptr)
           (cffi:with-foreign-slots ((gfs::width gfs::height) bmp-ptr (:struct gfs::bitmap))
             (setf hmask (gfs::create-bitmap gfs::width gfs::height 1 1 (cffi:null-pointer)))
             (if (gfs:null-handle-p hmask)

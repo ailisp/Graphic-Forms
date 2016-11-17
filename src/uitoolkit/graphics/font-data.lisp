@@ -83,7 +83,7 @@
 (defun data->logfont (hdc data)
   (let ((lf-ptr (cffi:foreign-alloc '(:struct gfs::logfont)))
         (style (font-data-style data)))
-    (gfs:zero-mem lf-ptr gfs::logfont)
+    (gfs:zero-mem lf-ptr (:struct gfs::logfont))
     (cffi:with-foreign-slots ((gfs::lfheight gfs::lfcharset gfs::lffacename) lf-ptr (:struct gfs::logfont))
       (setf gfs::lfheight (pntsize->lfheight hdc (font-data-point-size data)))
       (setf gfs::lfcharset (font-data-char-set data))
@@ -119,8 +119,8 @@
 
 (defun font->data (hdc hfont)
   (cffi:with-foreign-object (lf-ptr '(:struct gfs::logfont))
-    (gfs:zero-mem lf-ptr gfs::logfont)
-    (if (zerop (gfs::get-object hfont (cffi:foreign-type-size 'gfs::logfont) lf-ptr))
+    (gfs:zero-mem lf-ptr (:struct gfs::logfont))
+    (if (zerop (gfs::get-object hfont (cffi:foreign-type-size '(:struct gfs::logfont)) lf-ptr))
       (error 'gfs:win32-error :detail "get-object failed"))
     (logfont->data hdc lf-ptr)))
 

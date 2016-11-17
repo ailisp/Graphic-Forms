@@ -46,7 +46,7 @@
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
                               mii-ptr (:struct gfs::menuiteminfo))
-      (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
+      (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::menuiteminfo)))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-state+))
       (setf gfs::type 0)
       (setf gfs::state 0)
@@ -70,7 +70,7 @@
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
                               mii-ptr (:struct gfs::menuiteminfo))
-      (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
+      (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::menuiteminfo)))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-string+))
       (setf gfs::type 0)
       (setf gfs::state 0)
@@ -105,7 +105,7 @@
                                  gfs::idata gfs::tdata gfs::cch
                                  gfs::hbmpitem)
                                 mii-ptr (:struct gfs::menuiteminfo))
-        (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
+        (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::menuiteminfo)))
         (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-string+))
         (setf gfs::type 0)
         (setf gfs::state 0)
@@ -128,7 +128,7 @@
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
                               mii-ptr  (:struct gfs::menuiteminfo))
-      (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
+      (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::menuiteminfo)))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-state+))
       (setf gfs::type 0)
       (setf gfs::state (if checked gfs::+mfs-checked+ gfs::+mfs-unchecked+))
@@ -151,7 +151,7 @@
                                gfs::idata gfs::tdata gfs::cch
                                gfs::hbmpitem)
                               mii-ptr (:struct gfs::menuiteminfo))
-      (setf gfs::cbsize (cffi:foreign-type-size 'gfs::menuiteminfo))
+      (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::menuiteminfo)))
       (setf gfs::mask (logior gfs::+miim-id+ gfs::+miim-state+))
       (setf gfs::type 0)
       (setf gfs::state 0)

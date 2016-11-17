@@ -145,7 +145,7 @@
                                  gfs::ofnfileext gfs::ofndefext gfs::ofncustdata gfs::ofnhookfn
                                  gfs::ofntemplname gfs::ofnpvreserved gfs::ofndwreserved gfs::ofnexflags)
                                 ofn-ptr (:struct gfs::openfilename))
-        (setf gfs::ofnsize          (cffi:foreign-type-size 'gfs::openfilename)
+        (setf gfs::ofnsize          (cffi:foreign-type-size '(:struct gfs::openfilename))
               gfs::ofnhwnd          (gfs:handle owner)
               gfs::ofnhinst         (cffi:null-pointer)
               gfs::ofnfilter        filters-buffer

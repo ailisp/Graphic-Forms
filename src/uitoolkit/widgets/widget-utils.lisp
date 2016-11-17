@@ -2,6 +2,7 @@
 ;;;; widget-utils.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -188,7 +189,7 @@
                                gfs::windowleft
                                gfs::windowtop)
                               wi-ptr (:struct gfs::windowinfo))
-      (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
+      (setf gfs::cbsize (cffi::foreign-type-size '(:struct gfs::windowinfo)))
       (when (zerop (gfs::get-window-info (gfs:handle w) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
       (setf (gfs:point-x pnt) gfs::windowleft)
@@ -202,7 +203,7 @@
                                gfs::windowright
                                gfs::windowbottom)
                               wi-ptr (:struct gfs::windowinfo))
-      (setf gfs::cbsize (cffi::foreign-type-size 'gfs::windowinfo))
+      (setf gfs::cbsize (cffi::foreign-type-size '(:struct gfs::windowinfo)))
       (when (zerop (gfs::get-window-info (gfs:handle w) wi-ptr))
         (error 'gfs:win32-error :detail "get-window-info failed"))
       (setf (gfs:size-width sz) (- gfs::windowright gfs::windowleft))
@@ -267,7 +268,7 @@
     (unwind-protect
         (cffi:with-foreign-object (bm-ptr '(:struct gfs::bitmap))
           (cffi:with-foreign-slots ((gfs::width gfs::height) bm-ptr (:struct gfs::bitmap))
-            (gfs::get-object hbitmap (cffi:foreign-type-size 'gfs::bitmap) bm-ptr)
+            (gfs::get-object hbitmap (cffi:foreign-type-size '(:struct gfs::bitmap)) bm-ptr)
             (setf *check-box-size* (gfs:make-size :width (floor gfs::width 4)
                                                   :height (floor gfs::height 3)))))
       (gfs::delete-object hbitmap)))

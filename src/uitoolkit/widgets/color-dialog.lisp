@@ -115,7 +115,7 @@
       (cffi:with-foreign-slots ((gfs::ccsize gfs::howner gfs::hinst gfs::result
                                  gfs::ccolors gfs::flags gfs::cdata gfs::hookfn gfs::templname)
                                 cc-ptr (:struct gfs::choosecolor))
-        (setf gfs::ccsize    (cffi:foreign-type-size 'gfs::choosecolor)
+        (setf gfs::ccsize    (cffi:foreign-type-size '(:struct gfs::choosecolor))
               gfs::howner    (gfs:handle owner)
               gfs::hinst     (cffi:null-pointer)
               gfs::result    (gfg:color->rgb (or initial-color (gfg:make-color)))

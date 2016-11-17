@@ -53,7 +53,7 @@
                                  gfs::idata gfs::tdata gfs::cch
                                  gfs::hbmpitem)
                                 mii-ptr (:struct gfs::menuiteminfo))
-        (setf gfs::cbsize        (cffi:foreign-type-size 'gfs::menuiteminfo)
+        (setf gfs::cbsize        (cffi:foreign-type-size '(:struct gfs::menuiteminfo))
               gfs::mask          info-mask
               gfs::type          info-type
               gfs::state         info-state

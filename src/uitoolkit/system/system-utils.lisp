@@ -191,7 +191,7 @@
   `(cffi:with-foreign-object (,rect-var '(:struct gfs::rect))
      (cffi:with-foreign-slots ((gfs::left gfs::right gfs::top gfs::bottom)
                                ,rect-var (:struct gfs::rect))
-       (zero-mem ,rect-var gfs::rect)
+       (zero-mem ,rect-var (:struct gfs::rect))
        ,@body)))
 
 (defmacro with-hfont-selected ((hdc hfont) &body body)

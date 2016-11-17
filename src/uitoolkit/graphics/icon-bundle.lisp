@@ -40,7 +40,7 @@
 
 (defun hicon->image (hicon)
   (cffi:with-foreign-object (info-ptr '(:struct gfs::iconinfo))
-    (gfs::zero-mem info-ptr gfs::iconinfo)
+    (gfs::zero-mem info-ptr (:struct gfs::iconinfo))
     (if (zerop (gfs::get-icon-info hicon info-ptr))
       (error 'gfs:win32-error :detail "get-icon-info failed"))
     (cffi:with-foreign-slots ((gfs::hmask gfs::hcolor) info-ptr (:struct gfs::iconinfo))
@@ -54,7 +54,7 @@
       (setf point (gfs:make-point))))
   (cffi:with-foreign-object (info-ptr '(:struct gfs::iconinfo))
     (cffi:with-foreign-slots ((gfs::flag gfs::hcolor gfs::hmask) info-ptr (:struct gfs::iconinfo))
-      (gfs::zero-mem info-ptr gfs::iconinfo)
+      (gfs::zero-mem info-ptr (:struct gfs::iconinfo))
       (setf gfs::flag 1)
       (with-image-transparency (image point)
         (setf gfs::hcolor (gfs:handle image))

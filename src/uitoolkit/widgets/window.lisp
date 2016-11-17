@@ -87,8 +87,8 @@
   (cffi:with-foreign-string (str-ptr class-name)
     (cffi:with-foreign-object (wc-ptr '(:struct gfs::wndclassex))
       (cffi:with-foreign-slots ((gfs::cbsize) wc-ptr (:struct gfs::wndclassex))
-        (gfs::zero-mem wc-ptr gfs::wndclassex)
-        (setf gfs::cbsize (cffi:foreign-type-size 'gfs::wndclassex))
+        (gfs::zero-mem wc-ptr (:struct gfs::wndclassex))
+        (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::wndclassex)))
         (/= (gfs::get-class-info (gfs::get-module-handle (cffi:null-pointer)) str-ptr wc-ptr)
             0)))))
 
@@ -102,8 +102,8 @@
   (cffi:with-foreign-string (str-ptr (get-window-class-name hwnd))
     (cffi:with-foreign-object (wc-ptr '(:struct gfs::wndclassex))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::hcursor) wc-ptr (:struct gfs::wndclassex))
-        (gfs::zero-mem wc-ptr gfs::wndclassex)
-        (setf gfs::cbsize (cffi:foreign-type-size 'gfs::wndclassex))
+        (gfs::zero-mem wc-ptr (:struct gfs::wndclassex))
+        (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::wndclassex)))
         (when (zerop (gfs::get-class-info (gfs::get-module-handle (cffi:null-pointer)) str-ptr wc-ptr))
           (warn 'gfs:win32-warning
                 :detail (format nil "class ~a not registered" (get-window-class-name hwnd)))
@@ -122,8 +122,8 @@
                                    gfs::hicon gfs::hcursor gfs::hbrush
                                    gfs::menuname gfs::classname gfs::smallicon)
                                   wc-ptr (:struct gfs::wndclassex))
-          (gfs::zero-mem wc-ptr gfs::wndclassex)
-          (setf gfs::cbsize    (cffi:foreign-type-size 'gfs::wndclassex)
+          (gfs::zero-mem wc-ptr (:struct gfs::wndclassex))
+          (setf gfs::cbsize    (cffi:foreign-type-size '(:struct gfs::wndclassex))
                 gfs::style     style
                 gfs::wndproc   proc-ptr
                 gfs::clsextra  0

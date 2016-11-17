@@ -2,6 +2,7 @@
 ;;;; demo-utils.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -63,7 +64,7 @@
                                :text " "))
          (line3 (make-instance 'gfw:label
                                :parent text-panel
-                               :text (format nil "Copyright ~c 2006-2007 by Jack D. Unrue" (code-char 169))))
+                               :text (format nil "Copyright (C) 2006-2007 by Jack D. Unrue")))
          (line4 (make-instance 'gfw:label
                                :parent text-panel
                                :text "All Rights Reserved."))

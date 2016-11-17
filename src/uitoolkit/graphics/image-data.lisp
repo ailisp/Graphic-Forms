@@ -85,8 +85,8 @@
     (cffi:with-foreign-slots ((gfs::bisize gfs::biwidth gfs::biheight gfs::biplanes gfs::bibitcount
                                gfs::bicompression gfs::bmicolors)
                               bi-ptr (:struct gfs::bitmapinfo))
-      (gfs::zero-mem bi-ptr gfs::bitmapinfo)
-      (setf gfs::bisize        (cffi:foreign-type-size 'gfs::bitmapinfoheader)
+      (gfs::zero-mem bi-ptr (:struct gfs::bitmapinfo))
+      (setf gfs::bisize        (cffi:foreign-type-size '(:struct gfs::bitmapinfoheader))
             gfs::biplanes      1
             gfs::bibitcount    (depth plugin)
             gfs::bicompression gfs::+bi-rgb+)

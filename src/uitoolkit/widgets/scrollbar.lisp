@@ -54,11 +54,11 @@
   (validate-scrollbar-type type)
   (let ((hwnd (gfs:handle scrollbar)))
     (cffi:with-foreign-object (info-ptr '(:struct gfs::scrollinfo))
-      (gfs::zero-mem info-ptr gfs::scrollinfo)
+      (gfs::zero-mem info-ptr (:struct gfs::scrollinfo))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::fmask gfs::pagesize
                                  gfs::pos gfs::maxpos gfs::trackpos)
                                 info-ptr (:struct gfs::scrollinfo))
-        (setf gfs::cbsize (cffi:foreign-type-size 'gfs::scrollinfo)
+        (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::scrollinfo))
               gfs::fmask  gfs::+sif-all+)
         (gfs::get-scroll-info hwnd type info-ptr)
         (list gfs::maxpos
@@ -75,10 +75,10 @@
     (error 'gfs:disposed-error))
   (let ((hwnd (gfs:handle scrollbar)))
     (cffi:with-foreign-object (info-ptr '(:struct gfs::scrollinfo))
-      (gfs::zero-mem info-ptr gfs::scrollinfo)
+      (gfs::zero-mem info-ptr (:struct gfs::scrollinfo))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::fmask gfs::pagesize)
                                 info-ptr (:struct gfs::scrollinfo))
-        (setf gfs::cbsize   (cffi:foreign-type-size 'gfs::scrollinfo)
+        (setf gfs::cbsize   (cffi:foreign-type-size '(:struct gfs::scrollinfo))
               gfs::fmask    gfs::+sif-page+
               gfs::pagesize amount))
       (gfs::set-scroll-info hwnd type info-ptr 1)))
@@ -92,10 +92,10 @@
     (error 'gfs:disposed-error))
   (let ((hwnd (gfs:handle scrollbar)))
     (cffi:with-foreign-object (info-ptr '(:struct gfs::scrollinfo))
-      (gfs::zero-mem info-ptr gfs::scrollinfo)
+      (gfs::zero-mem info-ptr (:struct gfs::scrollinfo))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::fmask gfs::maxpos gfs::minpos)
                                 info-ptr (:struct gfs::scrollinfo))
-        (setf gfs::cbsize (cffi:foreign-type-size 'gfs::scrollinfo)
+        (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::scrollinfo))
               gfs::fmask  gfs::+sif-range+
               gfs::minpos 0
               gfs::maxpos limit))
@@ -116,10 +116,10 @@
     (error 'gfs:disposed-error))
   (let ((hwnd (gfs:handle scrollbar)))
     (cffi:with-foreign-object (info-ptr '(:struct gfs::scrollinfo))
-      (gfs::zero-mem info-ptr gfs::scrollinfo)
+      (gfs::zero-mem info-ptr (:struct gfs::scrollinfo))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::fmask gfs::pos)
                                 info-ptr (:struct gfs::scrollinfo))
-        (setf gfs::cbsize (cffi:foreign-type-size 'gfs::scrollinfo)
+        (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::scrollinfo))
               gfs::fmask  gfs::+sif-pos+
               gfs::pos    position))
       (gfs::set-scroll-info hwnd type info-ptr 1)))

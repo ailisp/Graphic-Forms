@@ -48,7 +48,7 @@
   (let ((info nil))
     (cffi:with-foreign-object (mi-ptr '(:struct gfs::monitorinfoex))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::flags) mi-ptr (:struct gfs::monitorinfoex))
-        (setf gfs::cbsize (cffi:foreign-type-size 'gfs::monitorinfoex))
+        (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::monitorinfoex)))
         (if (zerop (gfs::get-monitor-info hmonitor mi-ptr))
           (error 'gfs:win32-warning :detail "get-monitor-info failed"))
         (push (= (logand gfs::flags gfs::+monitorinfoof-primary+) gfs::+monitorinfoof-primary+) info)
