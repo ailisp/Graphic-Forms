@@ -41,7 +41,7 @@
                                   ("All Files (*.*)"    . "*.*")))
 
 (defvar *textedit-new-title*    "new file - TextEdit")
-
+(defvar *textedit-dir*        (merge-pathnames "src/demos/textedit/" *gf-dir*))
 
 (defun manage-textedit-file-menu (disp menu)
   (declare (ignore disp))
@@ -158,7 +158,7 @@
 
 (defun about-textedit (disp item)
   (declare (ignore disp item))
-  (let* ((*default-pathname-defaults* (user-homedir-pathname))
+  (let* ((*default-pathname-defaults* *textedit-dir*)
          (image-path (merge-pathnames "about.bmp")))
     (about-demo *textedit-win* image-path "About TextEdit" "TextEdit version 0.9")))
 
@@ -199,7 +199,7 @@
     (setf (gfw:menu-bar *textedit-win*) menubar
           (gfw:size *textedit-win*) (gfs:make-size :width 500 :height 500)
           (gfw:text *textedit-win*) *textedit-new-title*)
-    (let ((*default-pathname-defaults* (user-homedir-pathname)))
+    (let ((*default-pathname-defaults* *textedit-dir*))
      (setf (gfw:image *textedit-win*) (make-instance 'gfg:icon-bundle :file (merge-pathnames "textedit.ico"))))
     (gfw:show *textedit-win* t)))
 

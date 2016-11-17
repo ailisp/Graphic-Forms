@@ -2,6 +2,7 @@
 ;;;; tiles-panel.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -82,7 +83,7 @@
 
 (defmethod initialize-instance :after ((self tiles-panel-events) &key buffer-size)
   (declare (ignorable buffer-size))
-  (let ((*default-pathname-defaults* (parse-namestring gfsys::*unblocked-dir*))
+  (let ((*default-pathname-defaults* (parse-namestring *unblocked-dir*))
         (table (tile-image-table-of self))
         (kind 1))
     (loop for filename in '("blue-tile.bmp" "brown-tile.bmp" "red-tile.bmp"

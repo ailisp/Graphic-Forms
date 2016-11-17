@@ -44,7 +44,7 @@
   :components
   ((:file "config")
    (:module "src"
-	    :depends-on "config"
+	    :depends-on ("config")
 	    :components
 	    ((:file "packages")
 	     (:module "uitoolkit"

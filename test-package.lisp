@@ -1,5 +1,5 @@
 ;;;;
-;;;; config-test.lisp
+;;;; test-package.lisp
 ;;;;
 ;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
@@ -30,6 +30,8 @@
 ;;;; (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 ;;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ;;;;
+
+
 (in-package :cl-user)
 
 (defpackage #:graphic-forms.uitoolkit.tests
@@ -51,7 +53,7 @@
 
 (defvar *gf-dir*              (asdf:system-source-directory "graphic-forms-uitoolkit"))
 (defvar *gf-tests-dir*        (merge-pathnames "src/tests/" *gf-dir*))
-(defvar *textedit-dir*        (merge-pathnames "src/demos/textedit/" *gf-dir*))
+
 (defvar *unblocked-dir*       (merge-pathnames "src/demos/unblocked/" *gf-dir*))
 
 

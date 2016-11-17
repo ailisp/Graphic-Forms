@@ -2,6 +2,7 @@
 ;;;; unblocked-window.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C} 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -89,7 +90,7 @@
 
 (defun about-unblocked (disp item)
   (declare (ignore disp item))
-  (let* ((*default-pathname-defaults* (parse-namestring gfsys::*unblocked-dir*))
+  (let* ((*default-pathname-defaults* (parse-namestring *unblocked-dir*))
          (image-path (merge-pathnames "about.bmp")))
     (about-demo *unblocked-win* image-path "About UnBlocked" "UnBlocked version 0.9")))
 
@@ -129,7 +130,7 @@
     (gfw:pack *unblocked-win*)
 
     (new-unblocked nil nil)
-    (let ((*default-pathname-defaults* (parse-namestring gfsys::*unblocked-dir*)))
+    (let ((*default-pathname-defaults* (parse-namestring *unblocked-dir*)))
       (setf (gfw:image *unblocked-win*)
             (make-instance 'gfg:icon-bundle :file (merge-pathnames "unblocked.ico"))))
     (gfw:show *unblocked-win* t)))

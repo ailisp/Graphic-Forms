@@ -38,9 +38,9 @@
   :description "Graphic-Forms UI Toolkit Tests"
   :depends-on ("lisp-unit" "graphic-forms-uitoolkit")
   :components
-  ((:file "config-test")
+  ((:file "test-package")
    (:module "src"
-	    :depends-on ("config-test")
+	    :depends-on ("test-package")
 	    :components
 	    ((:module "demos"
 		      :components
