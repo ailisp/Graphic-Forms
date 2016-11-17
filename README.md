@@ -15,35 +15,39 @@ again (There was a McCLIM backend Graphic-Forms, but it didn't work and had been
 removed from newest McCLIM). I will then seperately maintain this McCLIM backend
 separately until it's mature and stable enough to merge into McCLIM. By then,
 McCLIM will be able to run on Linux, Mac OS X and Windows. Graphic-Forms will
-always suitable for simply, Windows only programs in Common Lisp.
+always suitable for simply, Windows only programs in Common Lisp. Currently
+Lisp packages are highly obtainable via QuickLisp, and all Graphic-Forms'
+dependencies are available via QuickLisp. Some of its dependencies has been
+updated. This fork fix these update issues and Graphic-Forms can now run on
+Windows again.
 
 
 Dependencies
 ------------
 
-Graphic-Forms requires the following libraries which must be downloaded
-separately:
+Graphic-Forms requires the following libraries. When load Graphic-Forms, all of them
+can be loaded automatically via QuickLisp.
 
  - ASDF
-   http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/cclan/asdf/
-   *note: ASDF is bundled with SBCL*
+   https://common-lisp.net/project/asdf/
 
- - CFFI (cffi-070816 or later)
+ - CFFI
    http://common-lisp.net/project/cffi/
 
  - Closer to MOP
-   http://common-lisp.net/project/closer/downloads.html
+   http://common-lisp.net/project/closer/
 
  - lw-compat
-   http://common-lisp.net/project/closer/downloads.html
-
-The following libraries are bundled with Graphic-Forms:
+   https://github.com/pcostanza/lw-compat
 
  - Practical Common Lisp Chapter08 and Chapter24
-   http://www.gigamonkeys.com/book/practicals-1.0.3.tar.gz
+   https://github.com/gigamonkey/monkeylib-macro-utilities
+   https://github.com/gigamonkey/monkeylib-binary-data   
+
+To run tests, you need:
 
  - lisp-unit
-   http://www.cs.northwestern.edu/academics/courses/325/readings/lisp-unit.html
+   https://github.com/OdonataResearchLLC/lisp-unit
 
 The following libraries are optional:
 
@@ -54,8 +58,9 @@ The following libraries are optional:
 Supported Common Lisp Implementations
 -------------------------------------
 
-Graphic-Forms currently supports Allegro CL 8.0, CLISP 2.40 or higher,
-LispWorks 5.0.1, and SBCL 1.0.5 or higher (with a small patch).
+Graphic-Forms currently supports SBCL 1.3.9 on Windows 7 x86. Older version of SBCL, CCL, CLisp
+with x64 version of Windows 7 and other Windows versions should also work, but not tested yet.
+Tests on other implementations and different version of Windows are welcomed.
 
 
 Known Problems
@@ -93,28 +98,17 @@ known problems in this release:
    for Allegro and LispWorks.
 
 
-How To Configure and Build
+How To Install
 --------------------------
-
-NOTE: in a future release, this library will be packaged for delivery
-via asdf-install.
-
-NOTE: the following steps are only suggestions provided as a default
-procedure for people new to Graphic-Forms or Common Lisp.
 
 1. [OPTIONAL] Install ImageMagick 6.2.6.5-Q16 (note in particular that it
    is the Q16 version that is needed, not the Q8 version). The default
    installation directory is "c:/Program Files/ImageMagick-6.2.6-Q16/".
 
-2. Extract the Graphic-Forms distribution archive somewhere on your
-   machine (or check out the source from Subversion).
+2. Execute the following forms at your REPL:
+   (ql:quickload :graphic-forms)
 
-3. Change to the Graphic-Forms top-level directory.
-
-4. Load ASDF into your Lisp image if it is not already present. Note that
-   SBCL bundles ASDF, so in this case you just need to (require 'asdf)
-
-5. Execute the following forms at your REPL
+3. Execute the following forms at your REPL
 
   ;;
   ;; If you need the ImageMagick plugin, execute:
@@ -129,19 +123,6 @@ procedure for people new to Graphic-Forms or Common Lisp.
   ;; Next, execute:
 
   (load "config.lisp")
-
-  ;;
-  ;; Set these variables as needed for your specific environment to
-  ;; load the other dependencies besides ImageMagick. Or if your Lisp
-  ;; image already has these systems loaded, set the variables to nil.
-  ;;
-  ;; Note that *gf-dir* should be the Graphic-Forms top-level directory
-  ;; path.
-  ;;
-  ;;   gfsys::*cffi-dir*
-  ;;   gfsys::*closer-mop-dir*
-  ;;   gfsys::*gf-dir*
-  ;;   gfsys::*lw-compat-dir*
 
   ;;
   ;; Execute the following form to populate asdf:*central-registry*
@@ -198,16 +179,12 @@ How To Run Tests And Demos
 Feedback and Bug Reports
 ------------------------
 
-Please provide feedback via the following channels:
+Graphic-Forms project is currently hosted on common-lisp.net, please provide feedback via the following channels:
 
-The development mailing list:
-  http://www.common-lisp.net/mailman/listinfo/graphic-forms-devel
+The issue tracking system:
+  https://gitlab.common-lisp.net/byao/Graphic-Forms/issues
 
-The bug tracking system:
-  http://sourceforge.net/tracker/?group_id=163034&atid=826145
-
-The patch tracker:
-  http://sourceforge.net/tracker/?group_id=163034&atid=826147
-
+If you want to contribute, feel free to send a pull request:
+  https://gitlab.common-lisp.net/byao/Graphic-Forms/merge_requests
 
 [the end]

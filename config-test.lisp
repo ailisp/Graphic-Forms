@@ -49,18 +49,9 @@
 
 (in-package #:gft)
 
+(defvar *gf-dir*              (asdf:system-source-directory "graphic-forms-uitoolkit"))
+(defvar *gf-tests-dir*        (merge-pathnames "src/tests/" *gf-dir*))
+(defvar *textedit-dir*        (merge-pathnames "src/demos/textedit/" *gf-dir*))
+(defvar *unblocked-dir*       (merge-pathnames "src/demos/unblocked/" *gf-dir*))
 
 
-(defvar *gf-dir*              )
-(defvar *gf-tests-dir*        )
-(defvar *textedit-dir*        "src/demos/textedit/")
-(defvar *unblocked-dir*       "src/demos/unblocked/")
-
-(defvar *lisp-unit-file*      "src/external-libraries/lisp-unit/lisp-unit.lisp")
-
-(defun configure-asdf ()
-  (let ((dir-list (list (concatenate 'string *gf-dir* *binary-data-dir*)
-                        (concatenate 'string *gf-dir* *macro-utilities-dir*)
-                        *cffi-dir* *closer-mop-dir* *lw-compat-dir* *gf-dir*)))
-    (loop for var in dir-list
-          do (pushnew var asdf:*central-registry* :test #'equal))))
