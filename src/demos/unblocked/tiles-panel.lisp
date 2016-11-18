@@ -34,6 +34,8 @@
 
 (in-package :graphic-forms.uitoolkit.tests)
 
+(defvar *unblocked-dir*       (merge-pathnames "src/demos/unblocked/" *gf-dir*))
+
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +tile-bmp-width+  24)
   (defconstant +tile-bmp-height+ 24))

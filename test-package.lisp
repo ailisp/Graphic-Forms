@@ -54,6 +54,6 @@
 (defvar *gf-dir*              (asdf:system-source-directory "graphic-forms-uitoolkit"))
 (defvar *gf-tests-dir*        (merge-pathnames "src/tests/" *gf-dir*))
 
-(defvar *unblocked-dir*       (merge-pathnames "src/demos/unblocked/" *gf-dir*))
+
 
 

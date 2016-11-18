@@ -95,6 +95,7 @@
              (,dummy (if ,customizer (funcall ,customizer ,layout)))
              (,size (gfw::compute-size ,layout *mock-container* ,width-hint ,height-hint))
              (,data (gfw::compute-layout ,layout *mock-container* ,width-hint ,height-hint)))
+	(declare (ignore ,dummy))
         (assert-equal ,expected-width (gfs::size-width ,size))
         (assert-equal ,expected-height (gfs::size-height ,size))
         (validate-rects ,data ,expected-rects)))))

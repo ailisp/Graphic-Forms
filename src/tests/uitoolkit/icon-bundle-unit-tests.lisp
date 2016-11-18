@@ -34,7 +34,7 @@
 (in-package :graphic-forms.uitoolkit.tests)
 
 (define-test bmp-file-icon-bundle-test
-  (let ((bundle (make-instance 'gfg:icon-bundle :file (merge-pathnames "happy.bmp")))
+  (let ((bundle (make-instance 'gfg:icon-bundle :file (merge-pathnames "uitoolkit/happy.bmp" *gf-tests-dir*)))
         (size (gfs:make-size :width 32 :height 32)))
     (unwind-protect
         (progn
@@ -47,9 +47,9 @@
 
 (define-test images-icon-bundle-test
   (let ((bundle (make-instance 'gfg:icon-bundle
-                               :images (list (make-instance 'gfg:image :file (merge-pathnames "happy.bmp"))
-                                             (make-instance 'gfg:image :file (merge-pathnames "blackwhite20x16.bmp"))
-                                             (make-instance 'gfg:image :file (merge-pathnames "truecolor16x16.bmp")))))
+                               :images (list (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/happy.bmp" *gf-tests-dir*))
+                                             (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/blackwhite20x16.bmp" *gf-tests-dir*))
+                                             (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/truecolor16x16.bmp" *gf-tests-dir*)))))
         (happy-size (gfs:make-size :width 32 :height 32))
         (bw-size (gfs:make-size :width 20 :height 16))
         (tc-size (gfs:make-size :width 16 :height 16)))
@@ -66,9 +66,9 @@
 
 (define-test push-images-icon-bundle-test
   (let ((bundle (make-instance 'gfg:icon-bundle))
-        (happy-image (make-instance 'gfg:image :file (merge-pathnames "happy.bmp")))
-        (bw-image (make-instance 'gfg:image :file (merge-pathnames "blackwhite20x16.bmp")))
-        (tc-image (make-instance 'gfg:image :file (merge-pathnames "truecolor16x16.bmp")))
+        (happy-image (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/happy.bmp" *gf-tests-dir*)))
+        (bw-image (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/blackwhite20x16.bmp" *gf-tests-dir*)))
+        (tc-image (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/truecolor16x16.bmp" *gf-tests-dir*)))
         (happy-size (gfs:make-size :width 32 :height 32))
         (bw-size (gfs:make-size :width 20 :height 16))
         (tc-size (gfs:make-size :width 16 :height 16))
@@ -102,10 +102,10 @@
 
 (define-test setf-images-icon-bundle-test
   (let ((bundle (make-instance 'gfg:icon-bundle
-                               :images (list (make-instance 'gfg:image :file (merge-pathnames "happy.bmp"))
-                                             (make-instance 'gfg:image :file (merge-pathnames "truecolor16x16.bmp")))))
-        (happy-image (make-instance 'gfg:image :file (merge-pathnames "happy.bmp")))
-        (bw-image (make-instance 'gfg:image :file (merge-pathnames "blackwhite20x16.bmp")))
+                               :images (list (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/happy.bmp" *gf-tests-dir*))
+                                             (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/truecolor16x16.bmp" *gf-tests-dir*)))))
+        (happy-image (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/happy.bmp" *gf-tests-dir*)))
+        (bw-image (make-instance 'gfg:image :file (merge-pathnames "uitoolkit/blackwhite20x16.bmp" *gf-tests-dir*)))
         (happy-size (gfs:make-size :width 32 :height 32))
         (bw-size (gfs:make-size :width 20 :height 16)))
     (unwind-protect

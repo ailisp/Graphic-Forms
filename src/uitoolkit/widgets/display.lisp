@@ -53,7 +53,7 @@
           (error 'gfs:win32-warning :detail "get-monitor-info failed"))
         (push (= (logand gfs::flags gfs::+monitorinfoof-primary+) gfs::+monitorinfoof-primary+) info)
         (let ((str-ptr (cffi:foreign-slot-pointer mi-ptr '(:struct gfs::monitorinfoex) 'gfs::device)))
-          (push (cffi:foreign-string-to-lisp str-ptr :count (1- gfs::+cchdevicename+)) info))
+          (push (cffi:foreign-string-to-lisp str-ptr :max-chars (1- gfs::+cchdevicename+)) info))
         (let ((rect-ptr (cffi:foreign-slot-pointer mi-ptr '(:struct gfs::monitorinfoex) 'gfs::monitor)))
           (cffi:with-foreign-slots ((gfs::left gfs::top gfs::right gfs::bottom)
                                     rect-ptr (:struct gfs::rect))
