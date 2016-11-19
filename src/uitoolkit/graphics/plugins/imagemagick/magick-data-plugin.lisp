@@ -78,9 +78,9 @@
          (pix-tmp (get-image-pixels handle 0 0 (gfs:size-width im-size) (gfs:size-height im-size))))
     (dotimes (i pixel-count)
       (cffi:with-foreign-slots ((blue green red reserved)
-                                (cffi:mem-aref pix-tmp 'pixel-packet i) pixel-packet)
+                                (cffi:mem-aptr pix-tmp '(:struct pixel-packet) i) (:struct pixel-packet))
         (cffi:with-foreign-slots ((gfs::rgbred gfs::rgbgreen gfs::rgbblue gfs::rgbreserved)
-                                  (cffi:mem-aref pixels-pointer 'gfs::rgbquad i) gfs::rgbquad)
+                                  (cffi:mem-aref pixels-pointer '(:struct gfs::rgbquad) i) (:struct gfs::rgbquad))
           (setf gfs::rgbreserved 0
                 gfs::rgbred      (scale-quantum-to-byte red)
                 gfs::rgbgreen    (scale-quantum-to-byte green)

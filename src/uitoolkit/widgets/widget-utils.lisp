@@ -88,7 +88,7 @@
        (translate-and-dispatch msg-ptr)
        nil)))
 
-#+(or clisp sbcl)
+#+(or clisp sbcl ccl)
 (defun startup (thread-name start-fn)
   (declare (ignore thread-name))
   (funcall start-fn)

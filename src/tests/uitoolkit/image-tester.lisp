@@ -94,7 +94,7 @@
   (gfw:shutdown 0))
 
 (defun load-images ()
-  (let ((*default-pathname-defaults* (parse-namestring gfsys::*gf-tests-dir*)))
+  (let ((*default-pathname-defaults* (merge-pathnames "uitoolkit/" *gf-tests-dir*)))
     (setf *happy-image*       (make-instance 'gfg:image :file "happy.bmp")
           *bw-image*          (make-instance 'gfg:image :file "blackwhite20x16.bmp")
           *true-image*        (make-instance 'gfg:image :file "truecolor16x16.bmp"))
@@ -115,7 +115,7 @@
                                  :submenu ((:item "E&xit" :callback #'exit-image-fn))))))
     (setf (gfw:menu-bar *image-win*) menubar)
     (setf (gfw:image *image-win*)
-          (make-instance 'gfg:icon-bundle :file (merge-pathnames "default.ico")))
+          (make-instance 'gfg:icon-bundle :file (merge-pathnames "uitoolkit/default.ico" *gf-tests-dir*)))
     (gfw:show *image-win* t)))
 
 (defun image-tester ()

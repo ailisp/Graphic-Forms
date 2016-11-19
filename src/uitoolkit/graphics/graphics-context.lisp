@@ -143,7 +143,7 @@
                 with i = 0
                 do (progn
                      (cffi:with-foreign-slots ((gfs::x gfs::y)
-                                               (cffi:mem-aref array '(:struct gfs::point) i) (:struct gfs::point))
+                                               (cffi:mem-aptr array '(:struct gfs::point) i) (:struct gfs::point))
                        (setf gfs::x (gfs:point-x pnt))
                        (setf gfs::y (gfs:point-y pnt)))
                      (incf i)))

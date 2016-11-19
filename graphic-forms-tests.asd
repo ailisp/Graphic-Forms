@@ -82,15 +82,14 @@
 				 (:file "border-layout-unit-tests")
 
 				 ;;; small examples
-				 ;; (:file "hello-world")
-				 ;; (:file "event-tester")
-				 ;; (:file "layout-tester")
-				 ;; (:file "image-tester")
-				 ;; (:file "drawing-tester")
-				 ;; (:file "widget-tester")
-				 ;; (:file "scroll-grid-panel")
-				 ;; (:file "scroll-text-panel")
-				 ;; (:file "scroll-tester")
-				 ;; (:file "windlg")
-				 ))))))))
+				 (:file "hello-world")
+				 (:file "event-tester")
+				 (:file "layout-tester") ; this file finds out that callback sometimes doesn't work well with sbcl, but ok with ccl. try to fix the original sbcl callback patch
+				 (:file "image-tester")
+				 (:file "drawing-tester")
+				 (:file "widget-tester")
+				 (:file "scroll-grid-panel")
+				 (:file "scroll-text-panel")
+				 (:file "scroll-tester")
+				 (:file "windlg")))))))))
 

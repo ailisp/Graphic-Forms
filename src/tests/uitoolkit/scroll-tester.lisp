@@ -48,7 +48,7 @@
   (scroll-tester-exit disp nil))
 
 (defun scroll-tester-internal ()
-  (setf *default-pathname-defaults* (parse-namestring gfsys::*gf-tests-dir*))
+  (setf *default-pathname-defaults* (merge-pathnames "uitoolkit/" *gf-tests-dir*))
   (let ((layout (make-instance 'gfw:heap-layout))
         (icons (make-instance 'gfg:icon-bundle :file (merge-pathnames "default.ico"))))
     (setf *scroll-tester-win* (make-instance 'gfw:top-level

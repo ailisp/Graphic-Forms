@@ -175,7 +175,7 @@
   (gfw:mapchildren *layout-tester-win*
                    (lambda (parent child)
                      (declare (ignore parent))
-                     (let ((it (gfw::append-item menu (gfw:text child) nil)))
+		     (let ((it (gfw::append-item menu (gfw:text child) nil)))
                        (unless (null (sub-disp-class-of d))
                          (setf (gfw:dispatcher it) (make-instance (sub-disp-class-of d))))
                        (unless (null (check-test-fn d))
@@ -386,7 +386,7 @@
   (exit-layout-tester))
 
 (defun layout-tester-internal ()
-  (setf *default-pathname-defaults* (parse-namestring gfsys::*gf-tests-dir*))
+  (setf *default-pathname-defaults* (merge-pathnames "uitoolkit/" *gf-tests-dir*))
   (setf *widget-counter* 0)
   (let ((menubar nil)
         (pack-disp (make-instance 'pack-layout-dispatcher))

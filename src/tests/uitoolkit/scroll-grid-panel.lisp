@@ -46,7 +46,7 @@
   (declare (ignore disp item)))
 
 (defun make-scroll-grid-panel (parent)
-  (setf *default-pathname-defaults* (parse-namestring gfsys::*gf-tests-dir*))
+  (setf *default-pathname-defaults* (merge-pathnames "uitoolkit/" *gf-tests-dir*))
   (let ((panel-size (gfs:make-size :width (1+ (* (gfs:size-width *grid-model-size*) +grid-cell-extent+))
                                    :height (1+ (* (gfs:size-height *grid-model-size*) +grid-cell-extent+))))
         (panel (make-instance 'gfw:panel :dispatcher (make-instance 'scroll-grid-panel-events)

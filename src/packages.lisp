@@ -2,6 +2,7 @@
 ;;;; packages.lisp
 ;;;;
 ;;;; Copyright (C) 2006-2007, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -300,7 +301,7 @@
 #+sbcl
   (:import-from :sb-mop :ensure-generic-function)
 #-sbcl
-  (:import-from :clos :ensure-generic-function)
+  (:import-from :closer-mop :ensure-generic-function)
   (:export
 
 ;; classes and structs

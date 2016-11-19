@@ -71,7 +71,7 @@
       (if (and parent (layout-of parent))
         (append-layout-item (layout-of parent) win)))))
 
-(cffi:defcallback (child-window-visitor :convention :stdcall) gfs::BOOL
+(cffi:defcallback (child-window-visitor) gfs::BOOL
     ((hwnd :pointer) (lparam gfs::LPARAM))
   (let* ((tc (thread-context))
          (child (get-widget tc hwnd))
@@ -79,8 +79,8 @@
     (unless (or (null parent) (null child) (typep child 'status-bar))
       (let ((ancestor-hwnd (gfs::get-ancestor (gfs:handle child) gfs::+ga-parent+))
             (tmp-list (child-visitor-results tc)))
-        (if (cffi:pointer-eq (gfs:handle parent) ancestor-hwnd)
-          (setf (child-visitor-results tc) (push (call-child-visitor-func tc parent child) tmp-list))))))
+  	(if (cffi:pointer-eq (gfs:handle parent) ancestor-hwnd)
+  	    (setf (child-visitor-results tc) (push (call-child-visitor-func tc parent child) tmp-list))))))
   1)
 
 (defun window-class-registered-p (class-name)

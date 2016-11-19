@@ -67,10 +67,10 @@
 ;;
 ;; TODO: change this once we understand SBCL MT support
 ;;
-#+(or clisp sbcl)
+#+(or clisp sbcl ccl)
 (defvar *the-thread-context* nil)
 
-#+(or clisp sbcl)
+#+(or clisp sbcl ccl)
 (defun thread-context ()
   (when (null *the-thread-context*)
     (setf *the-thread-context* (make-instance 'thread-context))
@@ -81,7 +81,7 @@
         (format *error-output* "~a~%" e))))
   *the-thread-context*)
 
-#+(or clisp sbcl)
+#+(or clisp sbcl ccl)
 (defun dispose-thread-context ()
   (let ((hwnd (utility-hwnd *the-thread-context*)))
     (unless (gfs:null-handle-p hwnd)

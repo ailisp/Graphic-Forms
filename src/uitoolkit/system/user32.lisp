@@ -211,7 +211,7 @@
 
 (defcfun
   ("EnumChildWindows" enum-child-windows :convention :stdcall)
-  INT
+  BOOL
   (hwnd HANDLE)
   (func :pointer)
   (lparam LPARAM))

@@ -63,11 +63,11 @@
   ;; yucky test code to set scrollbar parameters -- this
   ;; is not how applications will be expected to do it.
   ;;
-  (cffi:with-foreign-object (info-ptr 'gfs::scrollinfo)
-    (gfs::zero-mem info-ptr gfs::scrollinfo)
+  (cffi:with-foreign-object (info-ptr '(:struct gfs::scrollinfo))
+    (gfs::zero-mem info-ptr (:struct gfs::scrollinfo))
     (cffi:with-foreign-slots ((gfs::cbsize gfs::fmask gfs::maxpos gfs::pagesize)
-                              info-ptr gfs::scrollinfo)
-      (setf gfs::cbsize   (cffi:foreign-type-size 'gfs::scrollinfo)
+                              info-ptr (:struct gfs::scrollinfo))
+      (setf gfs::cbsize   (cffi:foreign-type-size '(:struct gfs::scrollinfo))
             gfs::fmask    (logior gfs::+sif-page+ gfs::+sif-range+ gfs::+sif-disablenoscroll+)
             gfs::maxpos   500
             gfs::pagesize 50))
@@ -80,12 +80,12 @@
   ;;
   (let ((which-sb (if (eql axis :vertical) gfs::+sb-vert+ gfs::+sb-horz+))
         (hwnd (gfs:handle *event-tester-window*)))
-    (cffi:with-foreign-object (info-ptr 'gfs::scrollinfo)
-      (gfs::zero-mem info-ptr gfs::scrollinfo)
+    (cffi:with-foreign-object (info-ptr '(:struct gfs::scrollinfo))
+      (gfs::zero-mem info-ptr (:struct gfs::scrollinfo))
       (cffi:with-foreign-slots ((gfs::cbsize gfs::fmask gfs::pos gfs::pagesize
                                  gfs::minpos gfs::maxpos gfs::trackpos)
-                                info-ptr gfs::scrollinfo)
-        (setf gfs::cbsize   (cffi:foreign-type-size 'gfs::scrollinfo)
+                                info-ptr (:struct gfs::scrollinfo))
+        (setf gfs::cbsize   (cffi:foreign-type-size '(:struct gfs::scrollinfo))
               gfs::fmask    gfs::+sif-all+)
         (gfs::get-scroll-info hwnd which-sb info-ptr)
         (case detail
@@ -307,7 +307,7 @@
                                (:item "&Help" :dispatcher echo-md
                                               :submenu ((:item "&About" :dispatcher echo-md))))))
     (setf (gfw:menu-bar *event-tester-window*) (gfw:make-menu 'event-tester-menu))
-    (setf (gfw:image *event-tester-window*) (make-instance 'gfg:icon-bundle :file (merge-pathnames "default.ico")))
+    (setf (gfw:image *event-tester-window*) (make-instance 'gfg:icon-bundle :file (merge-pathnames "uitoolkit/default.ico" *gf-tests-dir*)))
     (gfw:show *event-tester-window* t)))
 
 (defun event-tester ()

@@ -295,7 +295,7 @@
     outer-panel))
 
 (defun widget-tester-internal ()
-  (setf *default-pathname-defaults* (parse-namestring gfsys::*gf-tests-dir*))
+  (setf *default-pathname-defaults* (merge-pathnames "uitoolkit/" *gf-tests-dir*))
   (setf *widget-tester-win* (make-instance 'gfw:top-level :dispatcher (make-instance 'widget-tester-events)
                                                           :layout (make-instance 'gfw:heap-layout)
                                                           :style '(:frame :status-bar)))

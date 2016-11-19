@@ -347,7 +347,7 @@
                                (:item "&Tests"
                                 :callback #'find-checked-item
                                 :submenu ((:item "&Arcs and Chords" :checked :callback #'select-arcs)
-                                          (:item "&Bézier Curves" :callback #'select-beziers)
+                                          (:item "&Bezier Curves" :callback #'select-beziers)
                                           (:item "&Ellipses" :callback #'select-ellipses)
                                           (:item "&Lines and Polylines" :callback #'select-lines)
                                           (:item "&Pie Wedges" :callback #'select-wedges)
@@ -360,7 +360,8 @@
     (setf (gfw:menu-bar *drawing-win*) menubar)
     (setf (gfw:size *drawing-win*) (gfs:make-size :width 390 :height 310))
     (setf (gfw:text *drawing-win*) "Drawing Tester")
-    (setf (gfw:image *drawing-win*) (make-instance 'gfg:icon-bundle :file (merge-pathnames "default.ico")))
+    (setf (gfw:image *drawing-win*) (make-instance 'gfg:icon-bundle :file (merge-pathnames "uitoolkit/default.ico"
+											   *gf-tests-dir*)))
     (gfw:show *drawing-win* t)))
 
 (defun drawing-tester ()
