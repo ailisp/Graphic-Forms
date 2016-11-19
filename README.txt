@@ -22,12 +22,14 @@ via QuickLisp, and all Graphic-Forms' dependencies are available via
 QuickLisp. Some of its dependencies has been updated. This fork fix
 these update issues and Graphic-Forms can now run on Windows again.
 
-Quickstart ----------
+Quickstart
+----------
 
 Download or clone the project and put it tnto QuickLisp's local
-	 project directory and evaluate: (ql:quickload :graphic-forms)
+project directory and evaluate: (ql:quickload :graphic-forms)
 
-Dependencies ------------
+Dependencies
+------------
 
 Graphic-Forms requires the following libraries. When load
 Graphic-Forms, all of them can be loaded automatically via QuickLisp.
@@ -64,7 +66,8 @@ on other implementations and different version of Windows are
 welcomed. Original Graphic-Forms has Allegro CL and Lispworks support,
 but I am not able to test on commercial platforms.
 
-Known Problems --------------
+Known Problems
+--------------
 
 Aside from the fact that there are a myriad of classes, functions, and
 features in general that are not yet implemented, this section lists
@@ -124,7 +127,8 @@ following forms at your REPL
 4. Proceed to the next section to run the tests, or start coding!
 
 
-How To Run Tests And Demos --------------------------
+How To Run Tests And Demos
+--------------------------
 
 1. Load the graphic-forms system as described in the previous section
 
@@ -142,7 +146,8 @@ How To Run Tests And Demos --------------------------
   ;; execute the unit-tests (in-package :gft) (run-tests)
 
 
-Feedback and Bug Reports ------------------------
+Feedback and Bug Reports
+------------------------
 
 Graphic-Forms project is currently hosted on common-lisp.net, please
 provide feedback via the following channels:
