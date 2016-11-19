@@ -2,6 +2,7 @@
 ;;;; drawing-tester.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without

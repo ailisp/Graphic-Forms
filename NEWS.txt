@@ -1,6 +1,3 @@
-
-
-
 ==============================================================================
 
 Release 0.8.0 of Graphic-Forms, a Common Lisp library for Windows GUI
