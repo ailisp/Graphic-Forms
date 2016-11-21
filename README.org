@@ -68,14 +68,15 @@ Here are the screenshots for the two demos on Windows 7:
   ;; execute demos and test programs 
   
   (gft:hello-world)
-
   (gft:unblocked)
-
   (gft:textedit)
 
   ;; see src/tests/uitoolkit/README.txt for details on other test programs
 
-  ;; execute the unit-tests (in-package :gft) (run-tests)
+  ;; execute the unit-tests 
+  (in-package :gft) 
+  (run-tests)
+
 #+END_SRC
 
 ** Dependencies
