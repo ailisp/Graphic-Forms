@@ -1,0 +1,12 @@
+# ignore foo.txt
+#foo.txt
+# ignore all html
+#*.html
+# but don't ignore foo.html
+#!foo.html
+# ignore all .o .a file
+#*.[oa]
+
+*.fasl
+*.wx32fsl
+*.wx64fsl

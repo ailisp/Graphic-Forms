@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>README</title>
+<!-- 2016-11-21 周一 10:03 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">README</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Graphic-Forms 0.9.0</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Quickstart</a></li>
+<li><a href="#sec-1-2">1.2. Screenshots</a></li>
+<li><a href="#sec-1-3">1.3. Detailed Instructions on Installation</a></li>
+<li><a href="#sec-1-4">1.4. How To Run Tests And Demos</a></li>
+<li><a href="#sec-1-5">1.5. Dependencies</a></li>
+<li><a href="#sec-1-6">1.6. Supported Common Lisp Implementations</a></li>
+<li><a href="#sec-1-7">1.7. Known Problems</a></li>
+<li><a href="#sec-1-8">1.8. Feedback and Bug Reports</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Graphic-Forms 0.9.0</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Copyright (c) 2006-2007, Jack D. Unrue
+</p>
+
+<p>
+Copyright (c) 2016, Bo Yao
+</p>
+
+<p>
+Graphic-Forms is a user interface library implemented in Common Lisp focusing on the Windows(R) platform. Graphic-Forms is licensed under the terms of the BSD License.
+</p>
+
+<p>
+This is a fork of original Graphic-Forms in common-lisp.net by Mr. Jack D. Unrue. Thanks to his great work, Graphic-Forms is a comprehensive Windows GUI toolkit, with through tests, useful docs and demos. Unfortunately, it's not maintained for a while and can't live well with new version of its Lisp Dependencies. This fork does some fixes to make Graphic-Forms work under new verison of Windows and can be loaded through QuickLisp. A small amount of bug fix is also done but new functional improvement will be made in future version. All demos, unit tests and examples work correctly now, Graphic-Forms is now good for Windows GUI programming again.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Quickstart</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Download or clone the project and put it tnto QuickLisp's local project directory and evaluate: <code>(ql:quickload :graphic-forms)</code>. You can then view demos by:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-lisp">;; a simple text editor
+(gft:textedit)
+
+;; a block elimnating game
+(gft:unblocked)
+</pre>
+</div>
+<p>
+To make further configuration about plugins, see the <a href="#sec-1-3">1.3</a> section. To view other examples please see src/tests/uitoolkit/README.txt for details.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Screenshots</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Here are the screenshots for the two demos on Windows 7:
+</p>
+<ul class="org-ul">
+<li>TextEdit:
+</li>
+</ul>
+
+<div class="figure">
+<p><img src="./etc/textedit.png" alt="textedit.png" />
+</p>
+</div>
+<ul class="org-ul">
+<li>UnBlocked:
+</li>
+</ul>
+
+<div class="figure">
+<p><img src="./etc/unblocked.png" alt="unblocked.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Detailed Instructions on Installation</h3>
+<div class="outline-text-3" id="text-1-3">
+<ol class="org-ol">
+<li>[OPTIONAL] Install ImageMagick 6.2.6.5-Q16 (note in particular that it is the Q16 version that is needed, not the Q8 version). The default installation directory is "c:/Program Files/ImageMagick-6.2.6-Q16/".
+</li>
+
+<li>Download or clone the project and put Graphic-Forms to a QuickLisp local project directory (Hopefully it will be add to QuickLisp's Package Index next month.
+</li>
+
+<li>Execute the following forms at your REPL: 
+</li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-lisp">(ql:quickload :graphic-forms)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>If you want more image type support with ImageMagick, Execute the following forms at your REPL
+</li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-lisp">(push :load-imagemagick-plugin *features*) 
+
+(setf cl-user::*magick-library-directory* "c:/path/to/ImageMagick/")
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>Execute the following forms at your REPL: 
+</li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-lisp">(ql:quickload :graphic-forms)~
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>Proceed to the next section to run the tests, or start coding!
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> How To Run Tests And Demos</h3>
+<div class="outline-text-3" id="text-1-4">
+<ol class="org-ol">
+<li>Load the graphic-forms system as described in the previous section
+</li>
+
+<li>Execute the following forms from your REPL:
+</li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-lisp">;; execute demos and test programs 
+
+(gft:hello-world)
+(gft:unblocked)
+(gft:textedit)
+
+;; see src/tests/uitoolkit/README.txt for details on other test programs
+
+;; execute the unit-tests 
+(in-package :gft) 
+(run-tests)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Dependencies</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Graphic-Forms requires the following libraries. When load Graphic-Forms, all of them can be loaded automatically via QuickLisp. 
+</p>
+
+<ul class="org-ul">
+<li><a href="https://common-lisp.net/project/asdf/">ASDF</a>
+</li>
+<li><a href="http://common-lisp.net/project/cffi/">CFFI</a>
+</li>
+<li><a href="http://common-lisp.net/project/closer/">Closer to MOP</a>
+</li>
+<li><a href="https://github.com/pcostanza/lw-compat">lw-compat</a>
+</li>
+<li><a href="https://github.com/gigamonkey/monkeylib-macro-utilities">Macro Utilities in Practical Common Lisp</a>
+</li>
+<li><a href="https://github.com/gigamonkey/monkeylib-binary-data">binary-data in Practical Common Lisp</a>
+</li>
+</ul>
+
+<p>
+To run tests, you need:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/OdonataResearchLLC/lisp-unit">lisp-unit</a>
+</li>
+</ul>
+
+<p>
+The following libraries are optional:
+</p>
+
+<ul class="org-ul">
+<li><a href="http://www.imagemagick.org/download/binaries/ImageMagick-6.2.6-5-Q16-windows-dll.exe">ImageMagick 6.2.6.5-Q16</a>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Supported Common Lisp Implementations</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Graphic-Forms currently supports SBCL 1.3.9, CCL 1.11 on Windows 7 x86. Older version of SBCL, CCL, CLisp with x64 version of Windows 7 and other Windows versions should also work, but not tested yet. Tests on other implementations and different version of Windows are welcomed. Original Graphic-Forms has Allegro CL and Lispworks support, but I am not able to test on commercial platforms.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Known Problems</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Aside from the fact that there are a myriad of classes, functions, and features in general that are not yet implemented, this section lists known problems in this release:
+</p>
+
+<ol class="org-ol">
+<li>The following bug filed against CLISP 2.38
+
+<p>
+<a href="http://sourceforge.net/tracker/index.php?func=detail&aid=1463994&group_id=1355&atid=101355">http://sourceforge.net/tracker/index.php?func=detail&aid=1463994&group_id=1355&atid=101355</a>
+</p>
+
+<p>
+may result in a GPF if a window's layout manager is changed. Compared to prior releases of Graphic-Forms, there is much less chance of this problem affecting layout management.
+</p>
+</li>
+
+<li>Please be advised that SBCL is itself still in the early stages of supporting Windows, and as a consequence, you may experience problems such as 'GC invariant lost' errors that result in a crash to LDB.
+</li>
+
+<li>The 'unblocked' and 'textedit' demo programs are not yet complete.
+</li>
+
+<li>The gfg:text-extent method currently does not return the correct text height value. As a workaround, get the text metrics for the font and compute height from that. The gfg:text-extent function does return the correct width.
+</li>
+
+<li>If a Graphic-Forms application is launched from within SLIME with CLISP or SBCL as the backend (both of which are single-threaded on Win32), further SLIME commands will be 'pipelined' until the Graphic-Forms main message loop exits. If/when these implementations gain multi-threading support on Win32, then the Graphic-Forms library code will be updated to launch a separate thread, as is currently done for Allegro and LispWorks.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> Feedback and Bug Reports</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+Graphic-Forms project is currently hosted on common-lisp.net, please provide feedback via the following channels:
+</p>
+
+<p>
+The issue tracking system: <a href="https://gitlab.common-lisp.net/byao/Graphic-Forms/issues">https://gitlab.common-lisp.net/byao/Graphic-Forms/issues</a>
+</p>
+
+<p>
+If you want to contribute, feel free to send a pull request: <a href="https://gitlab.common-lisp.net/byao/Graphic-Forms/merge_requests">https://gitlab.common-lisp.net/byao/Graphic-Forms/merge_requests</a>
+</p>
+
+<p>
+[the end]
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-11-21 周一 10:03</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
