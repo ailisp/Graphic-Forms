@@ -50,14 +50,17 @@
 	     (:module "uitoolkit"
 		      :depends-on ("packages")
 		      :components
-		      ((:module "system"
+		      ((:module "system" 
 				:serial t
 				:components
-				((:file "system-constants")
+				(#+sbcl
+				 (:file "sbcl-callback-hacking")
+				 (:file "system-constants")
 				 (:file "system-classes")
 				 (:file "system-conditions") ; not a very good place
 				 (:file "system-generics")
 				 (:file "system-types")
+
 				 (:file "datastructs")
 				 (:file "clib")
 				 (:file "comctl32")
@@ -68,7 +71,8 @@
 				 (:file "user32")
 				 (:file "native-object")
 				 (:file "system-utils")
-				 (:file "metrics")))
+				 (:file "metrics")
+				 (:file "visual-style")))
 		       (:module "graphics"
 				:depends-on ("system")
 				:components

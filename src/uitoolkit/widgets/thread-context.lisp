@@ -68,74 +68,47 @@
 ;;
 ;; TODO: change this once we understand SBCL MT support
 ;;
-#+(or clisp sbcl ccl)
+#-(or ccl allegro lispworks)
 (defvar *the-thread-context* nil)
 
-#+(or clisp sbcl ccl)
-(defun thread-context ()
-  (when (null *the-thread-context*)
-    (setf *the-thread-context* (make-instance 'thread-context))
-    (handler-case
-        (init-utility-hwnd *the-thread-context*)
-      (gfs:win32-error (e)
-        (setf *the-thread-context* nil)
-        (format *error-output* "~a~%" e))))
-  *the-thread-context*)
+#-(or ccl allegro lispworks)
+(defmacro current-thread-context ()
+  '*the-thread-context*)
 
-#+(or clisp sbcl ccl)
-(defun dispose-thread-context ()
-  (let ((hwnd (utility-hwnd *the-thread-context*)))
-    (unless (gfs:null-handle-p hwnd)
-      (gfs::destroy-window hwnd)))
-  (setf *the-thread-context* nil))
+#+ccl
+(defmacro current-thread-context ()
+  '(getf (ccl:process-plist ccl:*current-process*) 'thread-context))
 
 #+allegro
 (eval-when (:compile-top-level :load-top-level :execute) (require :process))
 
 #+allegro
+(defmacro current-thread-context ()
+  '(getf (mp:process-property-list mp:*current-process*) 'thread-context))
+
+#+lispworks
+(defmacro current-thread-context ()
+  '(getf (mp:process-plist mp:*current-process*) 'thread-context))
+
 (defun thread-context ()
-  (let ((tc (getf (mp:process-property-list mp:*current-process*) 'thread-context)))
+  (let ((tc (current-thread-context)))
     (when (null tc)
       (setf tc (make-instance 'thread-context))
-      (setf (getf (mp:process-property-list mp:*current-process*) 'thread-context) tc)
+      (setf (current-thread-context) tc)
       (handler-case
-          (init-utility-hwnd tc)
-        (gfs:win32-error (e)
-          (setf (getf (mp:process-property-list mp:*current-process*) 'thread-context) nil)
-          (format *error-output* "~a~%" e))))
+	  (init-utility-hwnd tc)
+	(gfs:win32-error (e)
+	  (setf (current-thread-context) nil)
+	  (format *error-output* "~a~%" e))))
     tc))
 
-#+allegro
 (defun dispose-thread-context ()
-  (let ((tc (getf (mp:process-property-list mp:*current-process*) 'thread-context)))
+  (let ((tc (current-thread-context)))
     (if tc
       (let ((hwnd (utility-hwnd tc)))
         (unless (gfs:null-handle-p hwnd)
           (gfs::destroy-window hwnd)))))
-  (setf (getf (mp:process-property-list mp:*current-process*) 'thread-context) nil))
-
-
-#+lispworks
-(defun thread-context ()
-  (let ((tc (getf (mp:process-plist mp:*current-process*) 'thread-context)))
-    (when (null tc)
-      (setf tc (make-instance 'thread-context))
-      (setf (getf (mp:process-plist mp:*current-process*) 'thread-context) tc)
-      (handler-case
-          (init-utility-hwnd tc)
-        (gfs:win32-error (e)
-          (setf (getf (mp:process-plist mp:*current-process*) 'thread-context) nil)
-          (format *error-output* "~a~%" e))))
-    tc))
-
-#+lispworks
-(defun dispose-thread-context ()
-  (let ((tc (getf (mp:process-plist mp:*current-process*) 'thread-context)))
-    (if tc
-      (let ((hwnd (utility-hwnd tc)))
-        (unless (gfs:null-handle-p hwnd)
-          (gfs::destroy-window hwnd)))))
-  (setf (getf (mp:process-plist mp:*current-process*) 'thread-context) nil))
+  (setf (current-thread-context) nil))
 
 (defun init-utility-hwnd (tc)
   (register-toplevel-noerasebkgnd-window-class)

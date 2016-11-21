@@ -1,6 +1,7 @@
 * Graphic-Forms 0.9.0
 
 Copyright (c) 2006-2007, Jack D. Unrue
+
 Copyright (c) 2016, Bo Yao
 
 Graphic-Forms is a user interface library implemented in Common Lisp focusing on the Windows(R) platform. Graphic-Forms is licensed under the terms of the BSD License.
