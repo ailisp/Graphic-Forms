@@ -60,7 +60,6 @@
 				 (:file "system-conditions") ; not a very good place
 				 (:file "system-generics")
 				 (:file "system-types")
-
 				 (:file "datastructs")
 				 (:file "clib")
 				 (:file "comctl32")
@@ -71,8 +70,7 @@
 				 (:file "user32")
 				 (:file "native-object")
 				 (:file "system-utils")
-				 (:file "metrics")
-				 (:file "visual-style")))
+				 (:file "metrics")))
 		       (:module "graphics"
 				:depends-on ("system")
 				:components
