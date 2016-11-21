@@ -47,8 +47,7 @@
    #:widget-tester
    #:textedit
    #:unblocked
-   #:windlg
-   #:run-tests))
+   #:windlg))
 
 (in-package #:gft)
 
