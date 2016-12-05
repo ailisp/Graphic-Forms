@@ -202,6 +202,47 @@
       (setf (gfs:point-x pnt) gfs::windowleft)
       (setf (gfs:point-y pnt) gfs::windowtop))))
 
+(defun widget-handle-outer-location (handle)
+  (let ((pnt (gfs:make-point)))
+   (cffi:with-foreign-object (wi-ptr '(:struct gfs::windowinfo))
+     (cffi:with-foreign-slots ((gfs::cbsize
+				gfs::windowleft
+				gfs::windowtop)
+			       wi-ptr (:struct gfs::windowinfo))
+       (setf gfs::cbsize (cffi::foreign-type-size '(:struct gfs::windowinfo)))
+       (when (zerop (gfs::get-window-info handle wi-ptr))
+	 (error 'gfs:win32-error :detail "get-window-info failed"))
+       (setf (gfs:point-x pnt) gfs::windowleft)
+       (setf (gfs:point-y pnt) gfs::windowtop)
+       pnt))))
+
+(defun widget-handle-inner-location (handle)
+  (let ((pnt (gfs:make-point)))
+   (cffi:with-foreign-object (wi-ptr '(:struct gfs::windowinfo))
+     (cffi:with-foreign-slots ((gfs::cbsize
+				gfs::clientleft
+				gfs::clienttop)
+			       wi-ptr (:struct gfs::windowinfo))
+       (setf gfs::cbsize (cffi::foreign-type-size '(:struct gfs::windowinfo)))
+       (when (zerop (gfs::get-window-info handle wi-ptr))
+	 (error 'gfs:win32-error :detail "get-window-info failed"))
+       (setf (gfs:point-x pnt) gfs::clientleft)
+       (setf (gfs:point-y pnt) gfs::clienttop)
+       pnt))))
+
+(defun relative-location (w)
+  "Return the location of the top left corner of the widget W in the parent's coordinate"
+  (let* ((handle (gfs:handle w))
+	 (parent (gfs::get-parent handle)))
+    (if (eql parent (cffi:null-pointer))
+	(widget-handle-outer-location handle)
+	(let ((pnt (widget-handle-outer-location handle))
+	      (parent-pnt (widget-handle-inner-location parent))
+	      (result (gfs:make-point)))
+	  (setf (gfs:point-x result) (- (gfs:point-x pnt) (gfs:point-x parent-pnt))
+		(gfs:point-y result) (- (gfs:point-y pnt) (gfs:point-y parent-pnt)))
+	  result))))
+
 (defun outer-size (w sz)
   (cffi:with-foreign-object (wi-ptr '(:struct gfs::windowinfo))
     (cffi:with-foreign-slots ((gfs::cbsize
