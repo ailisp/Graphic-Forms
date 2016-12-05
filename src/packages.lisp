@@ -73,6 +73,7 @@
     #:flatten
     #:handle
     #:location
+    #:relative-location
     #:make-point
     #:make-rectangle
     #:make-size
