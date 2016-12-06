@@ -73,7 +73,6 @@
     #:flatten
     #:handle
     #:location
-    #:relative-location
     #:make-point
     #:make-rectangle
     #:make-size
@@ -564,6 +563,7 @@
     #:progress-bar
     #:redraw
     #:redrawing-p
+    #:relative-location
     #:release-mouse
     #:reparentable-p
     #:replace-selection

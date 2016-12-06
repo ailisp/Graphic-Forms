@@ -308,6 +308,17 @@
     (outer-location self pnt)
     pnt))
 
+(defmethod (setf location) ((location gfs:point) (self window))
+  (if (gfs:disposed-p self)
+      (error 'gfs:disposed-error))
+  (let ((size (gfw:size self)))
+    (gfs::move-window (gfs:handle self)
+		      (gfs:point-x location)
+		      (gfs:point-y location)
+		      (gfs:point-x size)
+		      (gfs:point-y size)
+		      1)))
+
 (defmethod layout ((self window))
   (unless (null (layout-of self))
     (let ((sz (client-size self)))

@@ -513,6 +513,16 @@
   (flags DWORD))
 
 (defcfun
+    ("MoveWindow" move-window)
+    BOOL
+  (hwnd HANDLE)
+  (x :int)
+  (y :int)
+  (n-width :int)
+  (n-height :int)
+  (b-repaint BOOL))
+
+(defcfun
   ("PeekMessageA" peek-message)
   BOOL
   (msg LPTR)
