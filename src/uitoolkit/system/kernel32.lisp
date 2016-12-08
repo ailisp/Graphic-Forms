@@ -39,6 +39,12 @@
 (load-foreign-library "kernel32.dll")
 
 (defcfun
+    "Beep"
+    BOOL
+  (dw-freq DWORD)
+  (dw-duration DWORD))
+
+(defcfun
   ("FreeLibrary" free-library)
   BOOL
   (hmodule HANDLE))
