@@ -48,6 +48,7 @@
   (:method (dispatcher widget)
     (declare (ignorable dispatcher widget))))
 
+;; Not Implemented
 (defgeneric event-collapse (dispatcher item)
   (:documentation "Implement this to respond to an object (or item within) being collapsed.")
   (:method (dispatcher item)
@@ -63,6 +64,7 @@
   (:method (dispatcher widget)
     (declare (ignorable dispatcher widget))))
 
+;; Not Implemented
 (defgeneric event-deiconify (dispatcher widget)
   (:documentation "Implement this to respond to an object being deiconified.")
   (:method (dispatcher widget)
@@ -73,6 +75,7 @@
   (:method (dispatcher widget)
     (declare (ignorable dispatcher widget))))
 
+;; Not Implemented
 (defgeneric event-expand (dispatcher item)
   (:documentation "Implement this to respond to an object (or item within) being expanded.")
   (:method (dispatcher item)
@@ -88,11 +91,13 @@
   (:method (dispatcher widget)
     (declare (ignorable dispatcher widget))))
 
+;; Not Implemented
 (defgeneric event-hide (dispatcher widget)
   (:documentation "Implement this to respond to an object being hidden.")
   (:method (dispatcher widget)
     (declare (ignorable dispatcher widget))))
 
+;; Not Implemented
 (defgeneric event-iconify (dispatcher widget)
   (:documentation "Implement this to respond to an object being iconified.")
   (:method (dispatcher widget)
@@ -123,16 +128,19 @@
   (:method (dispatcher widget point button)
     (declare (ignorable dispatcher widget point button))))
 
+;; Not Implemented
 (defgeneric event-mouse-enter (dispatcher widget point button)
   (:documentation "Implement this to respond to a mouse passing into the bounds of an object.")
   (:method (dispatcher widget point button)
     (declare (ignorable dispatcher widget point button))))
 
+;; Not Implemented
 (defgeneric event-mouse-exit (dispatcher widget point button)
   (:documentation "Implement this to respond to a mouse leaving the bounds an object.")
   (:method (dispatcher widget point button)
     (declare (ignorable dispatcher widget point button))))
 
+;; Not Implemented
 (defgeneric event-mouse-hover (dispatcher widget point button)
   (:documentation "Implement this to respond to a mouse that stops moving for a period of time within an object.")
   (:method (dispatcher widget point button)
@@ -158,6 +166,7 @@
   (:method (dispatcher widget gc rect)
     (declare (ignorable dispatcher widget gc rect))))
 
+;; Not Implemented
 (defgeneric event-pre-modify (dispatcher widget keycode char span new-content)
   (:documentation "Implement this to respond to content (e.g., text) in an object about to be modified.")
   (:method (dispatcher widget keycode char span new-content)
