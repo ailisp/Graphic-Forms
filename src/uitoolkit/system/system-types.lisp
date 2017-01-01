@@ -463,3 +463,9 @@
   (menuname LPCTSTR)
   (classname LPCTSTR)
   (smallicon HANDLE))
+
+(defcstruct trackmouseevent
+  (cbsize DWORD)
+  (dwflags DWORD)
+  (hwndtrack HANDLE)
+  (dwhovertime DWORD))

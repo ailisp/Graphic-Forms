@@ -1769,3 +1769,14 @@
 ;;;
 (defconstant +transparent+                      1)
 (defconstant +opaque+                           2)
+
+
+;;;
+;;; TrackMouseEvent
+;;;
+(defconstant +tme-cancel+    #x80000000)
+(defconstant +tme-hover+     #x00000001)
+(defconstant +tme-leave+     #x00000002)
+(defconstant +tme-nonclient+ #x00000010)
+(defconstant +tme-query+     #x40000000)
+

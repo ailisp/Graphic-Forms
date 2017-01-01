@@ -737,3 +737,8 @@
   ("WindowFromPoint" window-from-point)
   HANDLE
   (pnt :pointer))
+
+(defcfun
+    ("TrackMouseEvent" track-mouse-event)
+    BOOL
+  (lp-event-track HANDLE))

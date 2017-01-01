@@ -40,6 +40,8 @@
                                               gfs::+pm-qs-input+
                                               gfs::+pm-qs-postmessage+)))
 
+(defvar *current-hwnd-mouse-in* nil)
+
 ;;;
 ;;; window procedures
 ;;;
@@ -353,8 +355,30 @@
       ((= (logand wparam gfs::+mk-rbutton+) gfs::+mk-rbutton+)
         (setf btn-sym :right-button))
       (t
-        (setf btn-sym :left-button)))
+       (setf btn-sym :left-button)))
+    (unless (find hwnd *current-hwnd-mouse-in*)
+      (push hwnd *current-hwnd-mouse-in*)
+      (process-mouse-message #'event-mouse-enter hwnd lparam btn-sym)
+      (cffi:with-foreign-object (ptr '(:struct gfs::trackmouseevent))
+	(cffi:with-foreign-slots ((gfs::cbsize gfs::dwflags gfs::hwndtrack)
+				  ptr (:struct gfs::trackmouseevent))
+	  (setf gfs::cbsize (cffi:foreign-type-size '(:struct gfs::trackmouseevent))
+		gfs::dwflags gfs::+tme-leave+
+		gfs::hwndtrack hwnd)
+	  (gfs::track-mouse-event ptr))))
     (process-mouse-message #'event-mouse-move hwnd lparam btn-sym)))
+
+(defmethod process-message (hwnd (msg (eql gfs::+wm-mouseleave+)) wparam lparam)
+  (let ((btn-sym :left-button))
+    (cond
+      ((= (logand wparam gfs::+mk-mbutton+) gfs::+mk-mbutton+)
+       (setf btn-sym :middle-button))
+      ((= (logand wparam gfs::+mk-rbutton+) gfs::+mk-rbutton+)
+       (setf btn-sym :right-button))
+      (t
+       (setf btn-sym :left-button)))
+    (setf *current-hwnd-mouse-in* (delete hwnd *current-hwnd-mouse-in*))
+    (process-mouse-message #'event-mouse-exit hwnd lparam btn-sym)))
 
 (defmethod process-message (hwnd (msg (eql gfs::+wm-move+)) wparam lparam)
   (declare (ignore wparam lparam))
