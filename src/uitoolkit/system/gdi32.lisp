@@ -444,3 +444,30 @@
 
 (defun makerop4 (fore back)
   (logior (logand (ash back 8) #xFF000000) fore))
+
+(defcfun
+    ("CreateRectRgn" create-rect-rgn)
+    HANDLE
+  (nleftrect :int)
+  (ntoprect :int)
+  (nrightrect :int)
+  (nbottomrect :int))
+
+(defcfun
+    ("GetClipRgn" get-clip-rgn)
+    :int
+  (hdc HANDLE)
+  (hrgn HANDLE))
+
+(defcfun
+    ("SelectClipRgn" select-clip-rgn)
+    :int
+  (hdc HANDLE)
+  (hrgn HANDLE))
+
+(defcfun
+    ("ExtSelectClipRgn" ext-select-clip-rgn)
+    :int
+  (hdc HANDLE)
+  (hrgn HANDLE)
+  (fnmode :int))

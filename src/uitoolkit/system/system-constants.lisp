@@ -1780,3 +1780,16 @@
 (defconstant +tme-nonclient+ #x00000010)
 (defconstant +tme-query+     #x40000000)
 
+;;;
+;;; Clipping Region
+;;;
+(defconstant +rgn-and+ 1)
+(defconstant +rgn-copy+ 5)
+(defconstant +rgn-diff+ 4)
+(defconstant +rgn-or+ 2)
+(defconstant +rgn-xor+ 3)
+
+(defconstant +nullregion+ 1)
+(defconstant +simpleregion+ 2)
+(defconstant +complexregion+ 3)
+(defconstant +error+ 0)
