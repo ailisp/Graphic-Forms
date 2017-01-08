@@ -528,3 +528,26 @@
                str
                (compute-draw-text-style style)
                (if (or (null tab-width) (< tab-width 0)) 0 tab-width)))
+
+(defun create-rect-region (vec)
+  (apply 'gfs::create-rect-rgn (coerce vec 'list)))
+
+(defmethod set-clipping-region ((self graphics-context) (clipping-region vector))
+  (if (zerop (length clipping-region))
+      (let ((rgn (create-rect-region #(0 0 0 0))))
+	(gfs::select-clip-rgn (gfs:handle self) rgn)
+	(gfs::delete-object rgn))
+      (let ((rgn (create-rect-region clipping-region)))
+	(gfs::select-clip-rgn (gfs:handle self) rgn)
+	(gfs::delete-object rgn))))
+
+(defmethod set-clipping-region ((self graphics-context) (clipping-region list))
+  (assert clipping-region)
+  (let ((rgn (create-rect-region (first clipping-region))))
+    (gfs::select-clip-rgn (gfs:handle self) rgn)
+    (gfs::delete-object rgn)
+    (loop for tmp in (cdr clipping-region)
+       for rgn = (create-rect-region tmp)
+       do (progn
+	    (gfs::ext-select-clip-rgn (gfs:handle self) rgn gfs::+rgn-or+)
+	    (gfs::delete-object rgn)))))
