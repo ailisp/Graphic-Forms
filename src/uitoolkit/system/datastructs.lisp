@@ -83,6 +83,13 @@
     (cffi:with-foreign-slots ((x y) ptr (:struct point))
       (make-point :x x :y y))))
 
+;; TODO: CFFI has changed?
+(defmethod cffi:translate-from-foreign (ptr (type point-tclass))
+  (if (cffi:null-pointer-p ptr)
+    (make-point)
+    (cffi:with-foreign-slots ((x y) ptr (:struct point))
+      (make-point :x x :y y))))
+
 (defmethod cffi:translate-from-foreign (ptr (type rect-pointer-type))
   (if (cffi:null-pointer-p ptr)
     (make-rectangle)
@@ -92,6 +99,13 @@
         (make-rectangle :location pnt :size size)))))
 
 (defmethod cffi:translate-to-foreign ((lisp-pnt point) (type point-pointer-type))
+  (let ((ptr (cffi:foreign-alloc '(:struct point))))
+    (cffi:with-foreign-slots ((x y) ptr (:struct point))
+      (setf x (point-x lisp-pnt)
+            y (point-y lisp-pnt)))
+    ptr))
+
+(defmethod cffi:translate-to-foreign ((lisp-pnt point) (type point-tclass))
   (let ((ptr (cffi:foreign-alloc '(:struct point))))
     (cffi:with-foreign-slots ((x y) ptr (:struct point))
       (setf x (point-x lisp-pnt)

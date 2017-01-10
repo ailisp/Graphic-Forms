@@ -130,13 +130,14 @@
     (error 'gfs:disposed-error))
   (multiple-value-bind (ptr params)
       (cffi:convert-to-foreign pnt '(:struct gfs:point)) ; MAYBE!
+    (clim-gf::debug-prin1 ptr params pnt)
     (ecase system
       (:client (if (zerop (gfs::screen-to-client (gfs:handle widget) ptr))
                  (error 'gfs:win32-error :detail "screen-to-client failed")))
       (:display (if (zerop (gfs::client-to-screen (gfs:handle widget) ptr))
                   (error 'gfs::win32-error :detail "client-to-screen failed"))))
     (let ((pnt (cffi:convert-from-foreign ptr '(:struct gfs:point)))) ; MAYBE!
-      (cffi:free-converted-object ptr 'gfs:point params)
+      (cffi:free-converted-object ptr '(:struct gfs:point) params)
       pnt)))
 
 (declaim (inline show-cursor))
