@@ -347,15 +347,16 @@
   (declare (ignore wparam))
   (process-mouse-message #'event-mouse-up hwnd lparam :middle-button))
 
+;;; FIXME: when no button pressed, is left-button ok?
 (defmethod process-message (hwnd (msg (eql gfs::+wm-mousemove+)) wparam lparam)
-  (let ((btn-sym :left-button))
+  (let (btn-sym)
     (cond
+      ((= (logand wparam gfs::+mk-lbutton+) gfs::+mk-mbutton+)
+       (setf btn-sym :left-button))
       ((= (logand wparam gfs::+mk-mbutton+) gfs::+mk-mbutton+)
-        (setf btn-sym :middle-button))
+       (setf btn-sym :middle-button))
       ((= (logand wparam gfs::+mk-rbutton+) gfs::+mk-rbutton+)
-        (setf btn-sym :right-button))
-      (t
-       (setf btn-sym :left-button)))
+       (setf btn-sym :right-button)))
     (unless (find hwnd *current-hwnd-mouse-in*)
       (push hwnd *current-hwnd-mouse-in*)
       (process-mouse-message #'event-mouse-enter hwnd lparam btn-sym)
@@ -369,14 +370,14 @@
     (process-mouse-message #'event-mouse-move hwnd lparam btn-sym)))
 
 (defmethod process-message (hwnd (msg (eql gfs::+wm-mouseleave+)) wparam lparam)
-  (let ((btn-sym :left-button))
+  (let (btn-sym)
     (cond
+      ((= (logand wparam gfs::+mk-lbutton+) gfs::+mk-mbutton+)
+       (setf btn-sym :left-button))
       ((= (logand wparam gfs::+mk-mbutton+) gfs::+mk-mbutton+)
        (setf btn-sym :middle-button))
       ((= (logand wparam gfs::+mk-rbutton+) gfs::+mk-rbutton+)
-       (setf btn-sym :right-button))
-      (t
-       (setf btn-sym :left-button)))
+       (setf btn-sym :right-button)))
     (setf *current-hwnd-mouse-in* (delete hwnd *current-hwnd-mouse-in*))
     (process-mouse-message #'event-mouse-exit hwnd lparam btn-sym)))
 

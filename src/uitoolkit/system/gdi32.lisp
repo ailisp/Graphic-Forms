@@ -471,3 +471,18 @@
   (hdc HANDLE)
   (hrgn HANDLE)
   (fnmode :int))
+
+(defcfun
+    ("TransparentBlt" transparent-blt)
+    BOOL
+  (hdcdest HANDLE)
+  (xorigindest :int)
+  (yorigindest :int)
+  (wdest :int)
+  (ydest :int)
+  (hdcsrc HANDLE)
+  (xoriginsrc :int)
+  (yoriginsrc :int)
+  (wsrc :int)
+  (hsrc :int)
+  (crtransparent UINT))

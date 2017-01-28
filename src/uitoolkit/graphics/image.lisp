@@ -65,6 +65,36 @@
       (gfs::release-dc (cffi:null-pointer) screen-dc))
     hclone))
 
+(defun copy-image-area (image-src image-dst &key src-x src-y width height dst-x dst-y)
+  (let ((gc-src (make-graphics-context image-src))
+	(gc-dst (make-graphics-context image-dst)))
+    (cffi:with-foreign-slots ((gfs::width gfs::height) (gfs:handle image-src) (:struct gfs::bitmap))
+      (gfs::transparent-blt (gfs:handle gc-dst)
+			    (or dst-x 0)
+			    (or dst-y 0)
+			    (or width gfs::width)
+			    (or height gfs::height)
+			    (gfs:handle gc-src)
+			    (or src-x 0)
+			    (or src-y 0)
+			    (or width gfs::width)
+			    (or height gfs::height)
+			    (color->rgb *color-black*)))
+    (gfs:dispose gc-src)
+    (gfs:dispose gc-dst)))
+
+;;; This return should be free via gfs:dispose
+(defun make-graphics-context (&optional thing)
+  (cond
+    ((null thing)
+     (make-instance 'gfg:graphics-context))
+    ((typep thing 'gfw:widget)
+     (make-instance 'gfg:graphics-context :widget thing))
+    ((typep thing 'gfg:image)
+     (make-instance 'gfg:graphics-context :image thing))
+    (t
+     (error 'gfs:toolkit-error
+	    :detail (format nil "~a is an unsupported type" thing)))))
 ;;;
 ;;; methods
 ;;;

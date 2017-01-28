@@ -213,6 +213,7 @@
     #:copy-color
     #:copy-font-data
     #:copy-font-metrics
+    #:copy-image-area
     #:copy-pixels
     #:data-object
     #:depth
@@ -262,6 +263,7 @@
     #:load
     #:make-color
     #:make-font-data
+    #:make-graphics-context
     #:make-image-data
     #:make-palette
     #:matrix
