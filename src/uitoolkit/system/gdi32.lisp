@@ -2,6 +2,7 @@
 ;;;; gdi32.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016-2017, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -486,3 +487,9 @@
   (wsrc :int)
   (hsrc :int)
   (crtransparent UINT))
+
+(defcfun
+    ("SetROP2" set-rop2)
+    :int
+  (hdc HANDLE)
+  (fndrawmode :int))

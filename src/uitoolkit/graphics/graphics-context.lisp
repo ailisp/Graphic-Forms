@@ -551,3 +551,6 @@
        do (progn
 	    (gfs::ext-select-clip-rgn (gfs:handle self) rgn gfs::+rgn-or+)
 	    (gfs::delete-object rgn)))))
+
+(defmethod set-mix-mode ((self graphics-context) mix-mode)
+  (gfs::set-rop2 (gfs:handle self) mix-mode))

@@ -2,6 +2,7 @@
 ;;;; graphics-constants.lisp
 ;;;;
 ;;;; Copyright (C) 2006, Jack D. Unrue
+;;;; Copyright (C) 2016-2017, Bo Yao <icerove@gmail.com>
 ;;;; All rights reserved.
 ;;;;
 ;;;; Redistribution and use in source and binary forms, with or without
@@ -87,3 +88,21 @@
 (defconstant +size-we-cursor+      gfs::+ocr-sizewe+)
 (defconstant +up-arrow-cursor+     gfs::+ocr-up+)
 (defconstant +wait-cursor+         gfs::+ocr-wait+)
+
+;;; Device context color mixing
+(defconstant +R2-BLACK+	1)
+(defconstant +R2-COPYPEN+	13)
+(defconstant +R2-MASKNOTPEN+	3)
+(defconstant +R2-MASKPEN+	9)
+(defconstant +R2-MASKPENNOT+	5)
+(defconstant +R2-MERGENOTPEN+	12)
+(defconstant +R2-MERGEPEN+	15)
+(defconstant +R2-MERGEPENNOT+	14)
+(defconstant +R2-NOP+	11)
+(defconstant +R2-NOT+	6)
+(defconstant +R2-NOTCOPYPEN+	4)
+(defconstant +R2-NOTMASKPEN+	8)
+(defconstant +R2-NOTMERGEPEN+	2)
+(defconstant +R2-NOTXORPEN+	10)
+(defconstant +R2-WHITE+	16)
+(defconstant +R2-XORPEN+	7)
