@@ -297,7 +297,8 @@
 
 (defmethod draw-filled-rectangle ((self graphics-context) (rect gfs:rectangle))
   (if (gfs:disposed-p self)
-    (error 'gfs:disposed-error))
+      (error 'gfs:disposed-error))
+;  (clim-gf::debug-prin1 "draw-filled-rect" self rect)
   (call-rect-function #'gfs::rectangle "rectangle" (gfs:handle self) rect))
 
 (defmethod draw-filled-rounded-rectangle ((self graphics-context) rect size)
@@ -309,6 +310,7 @@
 ;;; TODO: support addressing elements within bitmap as if it were an array
 ;;;
 (defmethod draw-image ((self graphics-context) (im image) (pnt gfs:point))
+;  (clim-gf::debug-prin1 "draw-image" self im)
   (if (gfs:disposed-p self)
     (error 'gfs:disposed-error))
   (if (gfs:disposed-p im)

@@ -70,6 +70,7 @@
     #:disposed-p
     #:empty-span-p
     #:equal-size-p
+    #:equal-point-p
     #:flatten
     #:handle
     #:location
@@ -341,6 +342,10 @@
 ;; constants
     #:+default-widget-height+
     #:+default-widget-width+
+    #:+vk-lbutton+
+    #:+vk-rbutton+
+    #:+vk-mbutton+
+    #:+vk-cancel+
     #:+vk-break+
     #:+vk-backspace+
     #:+vk-tab+

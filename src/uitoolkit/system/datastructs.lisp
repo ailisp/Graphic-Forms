@@ -65,6 +65,10 @@
 (defun empty-span-p (span)
   (= (span-start span) (span-end span)))
 
+(defun equal-point-p (point1 point2)
+  (and (= (point-x point1) (point-x point2))
+       (= (point-y point1) (point-y point2))))
+
 (defun equal-size-p (size1 size2)
   (and (= (size-width size1) (size-width size2))
        (= (size-height size1) (size-height size2))))

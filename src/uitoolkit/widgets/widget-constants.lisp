@@ -33,6 +33,12 @@
 
 (in-package :graphic-forms.uitoolkit.widgets)
 
+
+(defconstant +vk-lbutton+ 1)
+(defconstant +vk-rbutton+ 2)
+(defconstant +vk-cancel+ 3)
+(defconstant +vk-mbutton+ 4)
+
 (defconstant +vk-break+            #x03)
 (defconstant +vk-backspace+        #x08)
 (defconstant +vk-tab+              #x09)

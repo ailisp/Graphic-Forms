@@ -423,6 +423,10 @@
       (dispatch-scroll-notification widget :vertical (gfs::lparam-low-word wparam))))
   0)
 
+;; (defmethod process-message (hwnd (msg (eql gfs::+wm-erasebkgnd+)) wparam lparam)
+;;   (clim-gf::debug-prin1 "erasebkgnd")
+;;   1)
+
 (defmethod process-message (hwnd (msg (eql gfs::+wm-paint+)) wparam lparam)
   (declare (ignore wparam lparam))
   (let ((widget (get-widget (thread-context) hwnd)))

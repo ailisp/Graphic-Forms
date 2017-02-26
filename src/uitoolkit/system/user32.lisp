@@ -308,6 +308,11 @@
   (virtkey INT))
 
 (defcfun
+    ("GetKeyboardState" get-keyboard-state)
+    BOOL
+  (lpkeystate :pointer))
+
+(defcfun
   ("GetMenu" get-menu)
   HANDLE
   (hwnd HANDLE))
